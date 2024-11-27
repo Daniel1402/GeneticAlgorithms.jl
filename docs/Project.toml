@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+GeneticAlgorithms = "9735efce-a0dd-4f8d-ab70-f8f6a41fe78d"

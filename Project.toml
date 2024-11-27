@@ -1,0 +1,7 @@
+name = "GeneticAlgorithms"
+uuid = "9735efce-a0dd-4f8d-ab70-f8f6a41fe78d"
+authors = ["Daniel Kirste <daniel.kirste@campus.tu-berlin.de>"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.10"
