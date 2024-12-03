@@ -1,5 +1,6 @@
-using GeneticAlgorithms
 using Test
+
+include("../src/GeneticAlgorithms.jl")
 
 include("test_population.jl")
 include("test_selection.jl")

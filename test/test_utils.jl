@@ -1,4 +1,5 @@
 using Test
-using GeneticAlgorithms
+
+include("../src/GeneticAlgorithms.jl")
 
 # TODO
