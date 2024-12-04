@@ -6,11 +6,12 @@ include("Selection.jl")
 include("Crossover.jl")
 include("Mutation.jl")
 include("Fitness.jl")
-include("OptimizationLoop.jl")
 include("Utils.jl")
 
-struct GeneticAlgorithm{T}
-    initialization_strategy::InitializationStrategy
+using .Types
+
+struct GeneticAlgorithm
+    initialization_strategy::Function #InitializationStrategy
     fitness_function::Function
     max_generations::Int
     selection_strategy::SelectionStrategy
@@ -20,7 +21,7 @@ struct GeneticAlgorithm{T}
     elitism::Bool
 
     GeneticAlgorithm(
-        initialization_strategy::InitializationStrategy, 
+        initialization_strategy::Function, #InitializationStrategy, 
         fitness_function::Function, 
         selection_strategy::SelectionStrategy, 
         crossover_method::CrossoverMethod, 
@@ -29,7 +30,7 @@ struct GeneticAlgorithm{T}
         elitism::Bool=true,
         max_generations::Int=5,
         mutation_rate::Float64=0.1, 
-    ) where T = new{T}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
+    ) = new(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
 end
 
 
@@ -78,7 +79,5 @@ function optimize(
 end
 
 
-
-
-
+export optimize, Crossover
 end
