@@ -7,11 +7,6 @@ using ..Mutation
 using ..Fitness
 using ..Types
 
-abstract type Genotype end
-abstract type SelectionStrategy end
-abstract type CrossoverMethod end
-abstract type MutationMethod end
-
 function optimize(
     population::Vector{<:Genotype}, 
     fitness_function::Function, 

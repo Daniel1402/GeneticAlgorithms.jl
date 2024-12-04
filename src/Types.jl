@@ -7,4 +7,6 @@ abstract type MutationMethod end
 
 # TODO
 
+export Genotype, SelectionStrategy, CrossoverMethod, MutationMethod
+
 end
