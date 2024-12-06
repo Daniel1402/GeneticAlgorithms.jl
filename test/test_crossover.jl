@@ -18,9 +18,11 @@ flipped = false
 isValid = true
 
 
-for i in 1:length(offspring1)
+for i in eachindex(offspring1)
     if offspring1[i] != chromosome1[i] && !flipped 
         flipped = true
+        @test offspring1[i] == chromosome2[i]
+        @test offspring2[i] == chromosome1[i]
         continue
     end
 
@@ -29,7 +31,17 @@ for i in 1:length(offspring1)
         break
     end
 
-    if flipped && offspring1[i] != chromosome1[i]
+    if flipped && offspring2[i] != chromosome1[i]
+        isValid = false
+        break
+    end
+
+    if !flipped && offspring1[i] != chromosome1[i]
+        isValid = false
+        break
+    end
+
+    if !flipped && offspring2[i] != chromosome2[i]
         isValid = false
         break
     end
