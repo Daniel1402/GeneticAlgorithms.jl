@@ -28,7 +28,13 @@ function rouletteWheelSelection(population::Vector{Vector{Int64}}, fitness_score
         # Calculate the cumulative probabilities
         cum_probs = cumsum(fitness_scores ./ sum(fitness_scores))
 
-        selected_index = findfirst(cum_prob -> rand_generator() <= cum_prob, cum_probs)
+
+        @info "Fitness Scores: $fitness_scores"
+        @info "Cumulative Probabilities: $cum_probs"
+            
+        fixed_rand = rand_generator()
+
+        selected_index = findfirst(cum_prob -> fixed_rand <= cum_prob, cum_probs)
 
         return selected_index == nothing ? length(fitness_scores) : selected_index
     end
