@@ -15,6 +15,10 @@ function rouletteWheelSelection(population::Vector{Vector{Int64}}, fitness_score
         throw(ArgumentError("Fitness scores must be non-negative"))
     end
 
+    if all(fitness_scores .== 0.0)
+        throw(ArgumentError("Fitness scores cannot all be zero"))
+    end
+
     if length(population) == 2
         return population[1], population[2]
     end
