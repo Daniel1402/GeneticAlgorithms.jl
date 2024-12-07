@@ -7,6 +7,18 @@ function rouletteWheelSelection(population::Vector{Vector{Int64}}, fitness_score
         throw(ArgumentError("Population and fitness scores must have the same length"))
     end
 
+    if length(population) <= 1
+        throw(ArgumentError("Population must have at least 2 individuals"))
+    end
+
+    if any(fitness_scores .< 0)
+        throw(ArgumentError("Fitness scores must be non-negative"))
+    end
+
+    if length(population) == 2
+        return population[1], population[2]
+    end
+
     # Helper function to select an index based on the fitness scores
     function indexSelection(fitness_scores, rand_generator)
         # Calculate the cumulative probabilities
