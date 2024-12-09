@@ -1,5 +1,6 @@
 module GeneticAlgorithms
 
+include("PopulationInitialization.jl")
 include("Types.jl")
 include("Population.jl")
 include("Selection.jl")
@@ -79,5 +80,5 @@ function optimize(
 end
 
 
-export optimize, Crossover
+export optimize, Crossover, PopulationInitialization, Selection
 end

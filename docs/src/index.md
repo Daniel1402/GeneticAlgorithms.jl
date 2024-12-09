@@ -7,9 +7,9 @@ CurrentModule = GeneticAlgorithms
 Documentation for [GeneticAlgorithms](https://github.com/Daniel1402/GeneticAlgorithms.jl).
 
 ```@index
+
 ```
 
 ```@autodocs
-Modules = [GeneticAlgorithms]
-Modules = [GeneticAlgorithms.Fitness]
+Modules = [GeneticAlgorithms, GeneticAlgorithms.PopulationInitialization, GeneticAlgorithms.Selection, GeneticAlgorithms.Fitness]
 ```
