@@ -4,7 +4,7 @@ using ..Types
 using Distributions
 
 """
-    Defines the mutation of genes of real values (currently only Float64 and Integer types (including e.g. Bool))
+    Defines the mutation of genes of real values (currently only Float64 and Integer types (including Bool))
     Mutation is applied for each gene on its own with probability `mutation_rate` vith values from the uniform
     distribution in the interval 'mutation_interval'.
 """
@@ -44,6 +44,14 @@ function (c::RealGeneMutation)(genes::Matrix{T})::Matrix{T} where T<:Integer
     mask = rand((0,1), size(genes)) .< c.mutation_rate
     random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(genes))
     return genes .+ (mask .&& random_additions)
+end
+
+"""
+    Mutates the genes with a probability of c.mutation_rate and values in the interval c.mutation_interval
+"""
+function (c::RealGeneMutation)(genes::Matrix{T})::Matrix{T} where T<:Bool
+    mask = rand((0,1), size(genes)) .< c.mutation_rate
+    return genes .⊻ mask # bitwise XOR
 end
 
 export RealGeneMutation
