@@ -80,5 +80,5 @@ function optimize(
 end
 
 
-export optimize, Crossover, PopulationInitialization
+export optimize, Crossover, PopulationInitialization, Selection
 end
