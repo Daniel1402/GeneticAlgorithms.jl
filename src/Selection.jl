@@ -3,6 +3,8 @@ module Selection
 using ..Types
 """
 Performs Roulette Wheel Selection on a population based on fitness scores, returning two selected individuals (parents).
+
+Selection is based on the cumulative probabilities of the fitness scores. 
 """
 function rouletteWheelSelection(population::Matrix{T}, fitness_scores::Vector{Float64}, rand_generator::Function = rand)::Tuple{Vector{T}, Vector{T}} where T <: Number
     if size(population, 1) != length(fitness_scores)
