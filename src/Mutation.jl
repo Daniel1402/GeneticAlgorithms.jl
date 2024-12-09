@@ -1,8 +1,14 @@
 module Mutation
 
 using ..Types
+using Distributions
 
-struct RealGeneMutation{T<:Real}
+"""
+    Defines the mutation of genes of real values (currently only Float64 and Integer types (including e.g. Bool))
+    Mutation is applied for each gene on its own with probability `mutation_rate` vith values from the uniform
+    distribution in the interval 'mutation_interval'.
+"""
+struct RealGeneMutation{T<:Union{Float64, Integer}}
     mutation_rate::Float64
     mutation_interval::Tuple{T, T}
 
@@ -21,11 +27,23 @@ struct RealGeneMutation{T<:Real}
 
 end
 
-function (c::RealGeneMutation)(genes::Vector{<:Real})::Vector{<:Real}
-    """
+"""
     Mutates the genes with a probability of c.mutation_rate and values in the interval c.mutation_interval
-    """
-    return [gene + (rand() < c.mutation_rate ? rand(c.mutation_interval) : 0) for gene in genes]
+"""
+function (c::RealGeneMutation)(genes::Matrix{T})::Matrix{T} where T<:Float64
+    
+    mask = rand((0,1), size(genes)) .< c.mutation_rate
+    random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(genes))
+    return genes .+ (mask .&& random_additions)
+end
+
+"""
+    Mutates the genes with a probability of c.mutation_rate and values in the interval c.mutation_interval
+"""
+function (c::RealGeneMutation)(genes::Matrix{T})::Matrix{T} where T<:Integer
+    mask = rand((0,1), size(genes)) .< c.mutation_rate
+    random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(genes))
+    return genes .+ (mask .&& random_additions)
 end
 
 export RealGeneMutation
