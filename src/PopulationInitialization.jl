@@ -8,7 +8,7 @@ using Distributions
 Creates a population of `population_size` including chromosomes of `chromosome_size`. 
 The chromosome-values are drawn from a uniform distribution over `interval`.
 """
-function uniform(population_size::Int64, chromosome_size::Int64, interval=(0, 1))
+function uniform(population_size::Int64, chromosome_size::Int64, interval=(0, 1))::Matrix{Float64}
     if interval[1] >= interval[2]
         throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
     end
