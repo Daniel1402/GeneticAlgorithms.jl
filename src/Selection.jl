@@ -31,9 +31,6 @@ function rouletteWheelSelection(population::Matrix{T}, fitness_scores::Vector{Fl
     function indexSelection(fitness_scores, rand_generator)
         # Calculate the cumulative probabilities
         cum_probs = cumsum(fitness_scores ./ sum(fitness_scores))
-
-        @info "Fitness Scores: $fitness_scores"
-        @info "Cumulative Probabilities: $cum_probs"
             
         fixed_rand = rand_generator()
 
