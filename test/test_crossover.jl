@@ -1,7 +1,7 @@
 using Test
 
 # include("../src/Crossover.jl")
-# inclide("../src/Types.jl")
+# include("../src/Types.jl")
 
 include("../src/GeneticAlgorithms.jl")
 
@@ -16,7 +16,6 @@ offspring1, offspring2 = singlePointCrossover(chromosome1, chromosome2)
 
 flipped = false
 isValid = true
-
 
 for i in eachindex(offspring1)
     if offspring1[i] != chromosome1[i] && !flipped 
