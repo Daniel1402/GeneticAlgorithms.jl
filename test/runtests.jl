@@ -3,8 +3,6 @@ using Test
 #include("../src/GeneticAlgorithms.jl")
 using GeneticAlgorithms
 
-println(ENV["JULIA_LOAD_PATH"])
-
 include("test_population.jl")
 include("test_population_initialization.jl")
 include("test_selection.jl")
