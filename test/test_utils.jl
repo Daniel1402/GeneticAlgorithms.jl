@@ -1,5 +1,4 @@
 using Test
 
-include("../src/GeneticAlgorithms.jl")
-
+using GeneticAlgorithms.Utils
 # TODO

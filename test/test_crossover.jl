@@ -1,10 +1,5 @@
 using Test
 
-# include("../src/Crossover.jl")
-# include("../src/Types.jl")
-
-include("../src/GeneticAlgorithms.jl")
-
 using GeneticAlgorithms.Crossover 
 
 @testset "Crossover.jl" begin
