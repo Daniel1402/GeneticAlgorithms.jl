@@ -31,7 +31,6 @@ end
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
 function (c::RealGeneMutation)(genes::Matrix{T})::Matrix{T} where T<:Float64
-    Mutation.RealGeneMutation(0.1, ("a", "b"))
     mask = rand(Uniform(0, 1), size(genes)) .< c.mutation_rate
     random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(genes))
     return genes .+ (mask .&& random_additions)
