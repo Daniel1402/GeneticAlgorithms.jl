@@ -45,3 +45,16 @@ using GeneticAlgorithms.Crossover
     @test isValid
 end
 --------------------
+refactor the outcommented tests in style of the not outcommented tests above
+-->
+    population_initialization = RealUniformInitialization(20, 50, (-14.3, 18.2))
+    population = population_initialization()
+    @test length(population.chromosomes) == 20
+    @test all([length(population.chromosomes[i].genes) == 50 for i in 1:20])
+    @test all([all([chromosome.genes[i] <= 18.2 && chromosome.genes[i] >= -14.3 for i in 1:length(chromosome.genes)]) for chromosome in population.chromosomes])
+
+    @test_throws ArgumentError RealUniformInitialization(0, 0, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(-1, 0, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(0, -1, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(3, 1, (2, 1))
+    @test_throws ArgumentError RealUniformInitialization(3, 1, (1, 1))
