@@ -88,7 +88,7 @@ function select(strategy::Function, population::Matrix{T}, fitness_scores::Vecto
     return strategy(population, fitness_scores)    
 end
 
-function crossover(method::Function, parent1::Vector{T}, parent2::Vector{T}) where T <: Number
+function crossover(method, parent1::Vector{T}, parent2::Vector{T}) where T <: Number
     return method(parent1, parent2)
 end
 
