@@ -1,7 +1,13 @@
-module Population
+module Population 
 
-using ..Types
+abstract type Chromosome end
 
-# TODO
+struct Float64Chromosome <: Chromosome
+    genes::Vector{Float64}
+end
+
+struct Population{T <: Chromosome}#
+    chromosomes::Vector{T}
+end
 
 end
