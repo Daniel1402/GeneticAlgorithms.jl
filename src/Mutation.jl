@@ -42,7 +42,7 @@ end
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
 function (c::RealGeneMutation{T})(chromosome::IntegerChromosome)::IntegerChromosome where {T<:Integer}
-    if eltype(mutation_interval) != Integer
+    if !all(c.mutation_interval[i] isa Integer for i in 1:2)
         throw(ArgumentError("Mutation interval must be of type Integer"))
     end
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
@@ -50,13 +50,13 @@ function (c::RealGeneMutation{T})(chromosome::IntegerChromosome)::IntegerChromos
     return IntegerChromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
-# """
-#     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
-# """
-# function (c::RealGeneMutation{T})(chromosome::BoolChromosome)::BoolChromosome where {T<:Bool}
-#     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-#     return chromosome.genes .⊻ mask # bitwise XOR
-# end
+"""
+    Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
+"""
+function (c::RealGeneMutation{T})(chromosome::BoolChromosome)::BoolChromosome where {T<:Bool}
+    mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
+    return BoolChromosome(chromosome.genes .⊻ mask) # bitwise XOR
+end
 
 export RealGeneMutation
 end

@@ -16,7 +16,7 @@ struct IntegerChromosome <: Chromosome
 end
 
 struct BoolChromosome <: Chromosome
-    genes::Vector{Float64}
+    genes::Vector{Bool}
 end
 
 struct Population{T<:Chromosome}
