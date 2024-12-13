@@ -1,15 +1,15 @@
 module PopulationInitialization
 
 using Distributions
+using ..Types
 
-abstract type InitializationMethod end
 
-struct RealUniformInitialization{T<:Real} <: InitializationMethod 
+struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     population_size::Int64
     chromosome_size::Int64
-    interval::Tuple{T, T}
-    
-    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T, T}) where T <: Real
+    interval::Tuple{T,T}
+
+    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T,T}) where {T<:Real}
         if interval[1] >= interval[2]
             throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
         end
@@ -28,12 +28,12 @@ end
 Creates a population of `population_size` including chromosomes of `chromosome_size`. 
 The chromosome-values are drawn from a uniform distribution over `interval`.
 """
-function (c::UniformInitialization{T})()::Population{Float64Chromosome} where T <: Float64
-    return rand(Uniform(interval[1], interval[2]), (population_size, chromosome_size))
+function (c::RealUniformInitialization{T})()::Population{Float64Chromosome} where {T<:Float64}
+    return Population([Float64Chromosome(rand(Uniform(c.interval[1], c.interval[2]), c.chromosome_size)) for _ in 1:c.population_size])
 end
 
-function (c::UniformInitialization{T})()::Population{IntegerChromosome} where T <: Integer
-    return rand(interval[1]:interval[2], (population_size, chromosome_size))
+function (c::RealUniformInitialization{T})()::Population{IntegerChromosome} where {T<:Integer}
+    return Population([IntegerChromosome(rand((c.interval[1], c.interval[2]), c.chromosome_size)) for _ in 1:c.population_size])
 end
 
 

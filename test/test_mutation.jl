@@ -13,7 +13,7 @@ using GeneticAlgorithms.Mutation
     @test mutation.mutation_rate == 0.1
     @test mutation.mutation_interval == (-0.5, 0.5)
 
-    mutation_int = RealGeneMutation(0.9, (0,17))
+    mutation_int = RealGeneMutation(0.9, (0, 17))
     mutated_genes = mutation_int([0 0])
     @test all(mutated_genes .>= 0 .& mutated_genes .<= 17)
 

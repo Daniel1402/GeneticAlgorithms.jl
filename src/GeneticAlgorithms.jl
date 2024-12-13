@@ -1,8 +1,7 @@
 module GeneticAlgorithms
 
-include("PopulationInitialization.jl")
 include("Types.jl")
-include("Population.jl")
+include("PopulationInitialization.jl")
 include("Selection.jl")
 include("Crossover.jl")
 include("Mutation.jl")
@@ -11,50 +10,48 @@ include("Utils.jl")
 
 using .Types
 
-struct GeneticAlgorithm
-    initialization_strategy::Function #InitializationStrategy
+struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
+    initialization_strategy::P
     fitness_function::Function
     max_generations::Int
-    selection_strategy::Function
-    crossover_method::Function
-    mutation_method::Mutation.RealGeneMutation
+    selection_strategy::S
+    crossover_method::C
+    mutation_method::M
     mutation_rate::Float64
     elitism::Bool
 
     GeneticAlgorithm(
-        initialization_strategy::Function, #InitializationStrategy, 
-        fitness_function::Function, 
-        selection_strategy::Function, 
-        crossover_method::Function, 
-        mutation_method::Mutation.RealGeneMutation,
-        
+        initialization_strategy::P,
+        fitness_function::Function,
+        selection_strategy::S,
+        crossover_method::C,
+        mutation_method::M,
         elitism::Bool=true,
         max_generations::Int=5,
-        mutation_rate::Float64=0.1, 
-    ) = new(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
+        mutation_rate::Float64=0.1,
+    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
 end
 
 
 function optimize(
     genetic_algorithm::GeneticAlgorithm
 )
-    population = initialize_population(genetic_algorithm.initialization_strategy)
+    population::Population = initialize_population(genetic_algorithm.initialization_strategy)
 
-    fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in eachrow(population)]
-    
+    fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
+
     for generation in 1:genetic_algorithm.max_generations
         # Sort population by fitness
-        sorted_population = sortperm(fitness_scores, by=fitness_score-> -fitness_score)
-        population = population[sorted_population, :]
+        sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
+        population = Population(population.chromosomes[sorted_population])
         fitness_scores = fitness_scores[sorted_population]
 
         println("Generation $generation | Best Fitness: $(fitness_scores[1])")
 
         # Elitism (Use the best individual for next generation)
-        new_population = genetic_algorithm.elitism ? [population[1, :]] : []
-        @info new_population
+        new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
         # Generate new generation
-        while length(new_population) < length(population)
+        while length(new_population) < length(population.chromosomes)
             parent1, parent2 = select(genetic_algorithm.selection_strategy, population, fitness_scores)
             offspring1, offspring2 = crossover(genetic_algorithm.crossover_method, parent1, parent2)
 
@@ -69,36 +66,34 @@ function optimize(
             push!(new_population, offspring1)
             push!(new_population, offspring2)
         end
-
-        new_population = new_population[1:length(population)] # Trim excess individuals
-        population = new_population
+        new_population = new_population[1:length(population.chromosomes)] # Trim excess individuals
+        population = Population(new_population)
 
         # Recalculate fitness scores for the new population
-        fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population]
+        fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
     end
 
-    return population[1]
+    return population.chromosomes[1]
 end
 
-function initialize_population(strategy::Function)
-    return strategy(10, 5)
+function initialize_population(strategy::P) where {P<:PopulationInitializationMethod}
+    return strategy()
 end
 
-function select(strategy::Function, population::Matrix{T}, fitness_scores::Vector{Float64}) where T <: Number
-    return strategy(population, fitness_scores)    
+function select(strategy::S, population::Population{T}, fitness_scores::Vector{F}) where {S<:SelectionMethod,T<:Chromosome,F<:Number}
+    return strategy(population, fitness_scores)
 end
 
-function crossover(method, parent1::Vector{T}, parent2::Vector{T}) where T <: Number
+function crossover(method::C, parent1::P, parent2::P) where {C<:CrossoverMethod,P<:Chromosome}
     return method(parent1, parent2)
 end
 
-function mutate(method::Mutation.RealGeneMutation, genes::Vector{T}) where T <: Number
-    return method(genes)
+function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome}
+    return method(individual)
 end
 
-function evaluate_fitness(individual::Union{Vector{T}, SubArray{T, 1, Matrix{T}}}, fitness_function::Function) where T <: Number
-    individual_vector = Vector{T}(individual)
-    return fitness_function(individual_vector)
+function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
+    return fitness_function(individual)
 end
 
 
