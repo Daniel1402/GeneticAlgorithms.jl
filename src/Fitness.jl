@@ -17,15 +17,12 @@ function rosenbrock_fitness(values::Vector{Float64})::Float64
         throw(ArgumentError("Rosenbrock function requires at least two dimensions."))
     end
 
-    # negative to maximize the function
-    return -sum(
+    result = sum(
         100 * (values[i+1] - values[i]^2)^2 + (1 - values[i])^2
         for i in 1:m-1
     )
-end
-
-function sumFitness(individual::Float64Chromosome)::Float64
-    return sum(individual.genes) > 0 ? sum(individual.genes) : 0
+    # negative to maximize the function
+    return 100 / (result + 1)
 end
 
 export rosenbrock_fitness, sumFitness

@@ -48,6 +48,7 @@ function optimize(
 
         println("Generation $generation | Best Fitness: $(fitness_scores[1])")
 
+        println("Best Individual: $(population.chromosomes[1].genes)")
         # Elitism (Use the best individual for next generation)
         new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
         # Generate new generation
@@ -93,7 +94,7 @@ function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome
 end
 
 function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
-    return fitness_function(individual)
+    return fitness_function(individual.genes)
 end
 
 
