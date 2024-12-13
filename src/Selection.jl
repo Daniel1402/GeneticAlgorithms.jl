@@ -1,17 +1,22 @@
 module Selection
 
 using ..Types
+
+abstract type SelectionStrategy end
+
+struct RouletteWheelSelection <: SelectionStrategy  end
+
 """
 Performs Roulette Wheel Selection on a population based on fitness scores, returning two selected individuals (parents).
 
 Selection is based on the cumulative probabilities of the fitness scores. 
 """
-function rouletteWheelSelection(population::Matrix{T}, fitness_scores::Vector{Float64}, rand_generator::Function = rand)::Tuple{Vector{T}, Vector{T}} where T <: Number
-    if size(population, 1) != length(fitness_scores)
+function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::Vector{Float64}, rand_generator::Function = rand)::Tuple{T, T} where T <: Chromosome
+    if size(population.chromosomes, 1) != length(fitness_scores)
         throw(ArgumentError("Population and fitness scores must have the same length"))
     end
 
-    if size(population, 1) <= 1
+    if size(population.chromosomes, 1) <= 1
         throw(ArgumentError("Population must have at least 2 individuals"))
     end
 
@@ -23,8 +28,8 @@ function rouletteWheelSelection(population::Matrix{T}, fitness_scores::Vector{Fl
         throw(ArgumentError("Fitness scores cannot all be zero"))
     end
 
-    if size(population, 1) == 2
-        return population[1, :], population[2, :]
+    if size(population.chromosomes, 1) == 2
+        return population.chromosomes[1, :], population.chromosomes[2, :]
     end
 
     # Helper function to select an index based on the fitness scores
@@ -47,9 +52,9 @@ function rouletteWheelSelection(population::Matrix{T}, fitness_scores::Vector{Fl
     # Adjust the index to account for the removed element
     p2_index += (p2_index >= p1_index ? 1 : 0)
 
-    return population[p1_index, :], population[p2_index, :]
+    return population.chromosomes[p1_index, :], population.chromosomes[p2_index, :]
 end
 
 
-export rouletteWheelSelection   
+export RouletteWheelSelection   
 end
