@@ -9,6 +9,8 @@ include("Fitness.jl")
 include("Utils.jl")
 
 using .Types
+using .Utils
+using Plots
 
 struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
     initialization_strategy::P
@@ -73,6 +75,17 @@ function optimize(
         # Recalculate fitness scores for the new population
         fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
     end
+
+    # Final sort of the population
+    sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
+    population = Population(population.chromosomes[sorted_population])
+
+    # Visualize the result 
+    # TODO support more than 2 dimensions
+    f(x, y) = genetic_algorithm.fitness_function([x, y])
+    points = [Tuple(population.chromosomes[1].genes[1:2])]
+    plt = Utils.visualize_function_with_contours(f, x_range=(-2.0, 2.0), y_range=(-1.0, 3.0), points=points)
+    savefig(plt, "result.png")
 
     return population.chromosomes[1]
 end
