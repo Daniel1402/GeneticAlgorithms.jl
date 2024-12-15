@@ -84,7 +84,11 @@ function optimize(
     # TODO support more than 2 dimensions
     f(x, y) = genetic_algorithm.fitness_function([x, y])
     points = [Tuple(population.chromosomes[1].genes[1:2])]
-    plt = Utils.visualize_function_with_contours(f, x_range=(-2.0, 2.0), y_range=(-1.0, 3.0), points=points)
+    x_center, y_center = points[1]
+    x_range = (x_center - 2.0, x_center + 2.0)
+    y_range = (y_center - 2.0, y_center + 2.0)
+    plt = Utils.visualize_function_with_contours(f, x_range=x_range, y_range=y_range, points=points)
+
     savefig(plt, "result.png")
 
     return population.chromosomes[1]
