@@ -4,6 +4,18 @@ using Plots
 
 gr() # set gr backend
 
+"""
+Plots a contour of the function `f(x, y)` over the specified x and y ranges, with optional points highlighted.
+
+# Arguments
+- `f::Function`: The function to visualize.
+- `x_range`: Range of x-values (default: (-2.0, 2.0)).
+- `y_range`: Range of y-values (default: (-2.0, 2.0)).
+- `points`: List of points to highlight (default: []).
+
+# Returns
+A contour plot of the function with optional highlighted points.
+"""
 function visualize_function_with_contours(
     f::Function;
     x_range::Tuple{Float64, Float64} = (-2.0, 2.0),
