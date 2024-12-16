@@ -31,7 +31,9 @@ function visualize_function_with_contours(
 
     # add points
     if !isempty(points)
-        scatter!(plt, [p[1] for p in points], [p[2] for p in points], color=:red, marker=:circle, label="provided points")
+        indices = 1:length(points)  # Indices of the points
+        colors = cgrad(:RdBu, length(x)).colors  # Generate a colormap
+        scatter!(plt, [p[1] for p in points], [p[2] for p in points], color=colors[indices], marker=:circle, label="provided points")
     end
 
     return plt

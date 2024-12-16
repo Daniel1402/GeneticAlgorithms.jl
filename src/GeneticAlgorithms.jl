@@ -42,6 +42,8 @@ function optimize(
 
     fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
 
+    best_chromosomes::Vector{Tuple{Float64, Float64}} = []
+
     for generation in 1:genetic_algorithm.max_generations
         # Sort population by fitness
         sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
@@ -74,6 +76,9 @@ function optimize(
 
         # Recalculate fitness scores for the new population
         fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
+    
+        # Add best Chromosome for visualization
+        push!(best_chromosomes, Tuple(population.chromosomes[1].genes[1:2]))
     end
 
     # Final sort of the population
@@ -83,11 +88,11 @@ function optimize(
     # Visualize the result 
     # TODO support more than 2 dimensions
     f(x, y) = genetic_algorithm.fitness_function([x, y])
-    points = [Tuple(population.chromosomes[1].genes[1:2])]
-    x_center, y_center = points[1]
+    # points = [Tuple(population.chromosomes[1].genes[1:2])]
+    x_center, y_center = best_chromosomes[1]
     x_range = (x_center - 2.0, x_center + 2.0)
     y_range = (y_center - 2.0, y_center + 2.0)
-    plt = Utils.visualize_function_with_contours(f, x_range=x_range, y_range=y_range, points=points)
+    plt = Utils.visualize_function_with_contours(f, x_range=x_range, y_range=y_range, points=best_chromosomes)
 
     savefig(plt, "result.png")
 

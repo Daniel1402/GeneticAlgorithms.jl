@@ -16,7 +16,7 @@ using GeneticAlgorithms.PopulationInitialization
     ga = GeneticAlgorithm(uniform, sum_abs, rouletteWheelSelection, singlePointCrossover, geneMutation)
     optimize(ga)
 
-    uniform = RealUniformInitialization(1000, 2, (-1.0, 1.0))
+    uniform = RealUniformInitialization(100, 2, (-2.0, 2.0))
     ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, 100, 0.5)
     println(optimize(ga_rosenbrock))
 end
