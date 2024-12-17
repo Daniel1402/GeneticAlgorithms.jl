@@ -5,13 +5,13 @@ using ..Types
 """
     rosenbrock_fitness(values::Vector{Float64})::Float64
 
-Calculates 100 devided by the Rosenbrock function value for a given vector.
+Calculates 100 divided by the Rosenbrock function value for a given vector.
 
 # Arguments
 - `values`: A vector of at least two Float64 values.
 
 # Returns
-- 100 devided by the Rosenbrock function value as a Float64.
+- 100 divided by the Rosenbrock function value as a Float64.
 """
 function rosenbrock_fitness(values::Vector{Float64})::Float64
     m = length(values)
