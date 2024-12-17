@@ -7,6 +7,8 @@
 
 This project is part of the Julia for Machine Learning course at Technical University Berlin.
 
+> Check out our [**short introduction to genetic algorithms**](#a-short-introduction-to-genetic-algorithms) if you are new to genetic algorithms.
+
 ## Getting Started with the Genetic Algorithms Project
 
 ### Prerequisites
@@ -88,3 +90,11 @@ Here is an overview of the project's main components:
 
 The result is automatically visualized in result.png when running the optimzation loop. Additionally, you can visualize fitness functions manually by using `visualize_function_with_contours` provided in **`src/Utils.jl`**.
 
+### A Short Introduction to Genetic Algorithms
+
+Genetic Algorithms (GAs) are optimization methods inspired by natural evolution, where a population of solutions evolves toward better performance through selection, crossover, and mutation in iterative loops.
+
+- **Selection**: Chooses the best-performing individuals (solutions) based on fitness to propagate their traits to the next generation.  
+- **Crossover (Recombination)**: Combines pairs of selected individuals to produce new offspring by mixing their features.  
+- **Mutation**: Introduces random changes in offspring to maintain diversity and explore new solutions.  
+- **Optimization Loop**: Repeats the process of selection, crossover, and mutation over multiple generations until a stopping criterion, such as convergence or a maximum iteration count, is met.  
