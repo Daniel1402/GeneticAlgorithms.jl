@@ -9,7 +9,7 @@ using ..Types
 Creates a population of `population_size` including chromosomes of `chromosome_size`. 
 The chromosome-values are drawn from a uniform distribution over `interval`. 
 The current implementation supports `Float64` and `Integer` types. 
-The type is determined by the `interval``.
+The type is determined by the `interval`.
 """
 struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     population_size::Int64
