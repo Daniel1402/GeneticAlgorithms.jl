@@ -86,5 +86,5 @@ Here is an overview of the project's main components:
 
 ### Visualizing Results
 
-The result is automatically visualized in result.png when running the optimzation loop. Additionally, you can visualize fitness functions manually by using `visualize_function_with_contours` provided in **`test/test_utils.jl`**.
+The result is automatically visualized in result.png when running the optimzation loop. Additionally, you can visualize fitness functions manually by using `visualize_function_with_contours` provided in **`src/Utils.jl`**.
 
