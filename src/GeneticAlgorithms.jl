@@ -12,6 +12,19 @@ using .Types
 using .Utils
 using Plots
 
+"""
+    GeneticAlgorithm
+
+Defines a genetic algorithm with the specified parameters. 
+The population is initialized with the `initialization_strategy` and the fitness 
+of each chromosome is calculated with the `fitness_function`. The algorithm runs
+for `max_generations` generations. The `selection_strategy` is used to select
+parents for the crossover. The `crossover_method` is used to generate offspring
+from the selected parents. The `mutation_method` is used to mutate the offspring.
+The `mutation_rate` is the probability of mutation. If `elitism` is true, the best
+individual from the previous generation is carried over to the next generation.
+"""
+
 struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
     initialization_strategy::P
     fitness_function::Function
@@ -34,7 +47,15 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
 end
 
+"""
+    optimize(genetic_algorithm::GeneticAlgorithm)
 
+Runs the genetic algorithm with the specified parameters and returns the best individual found.
+
+In this implementation, the function has the side effect of visualizing the Rosenbrock function and 
+the best solutions of each generation in "result.png". That's only a temporary solution and will be 
+replaced by a more flexible visualization method in the future.
+"""
 function optimize(
     genetic_algorithm::GeneticAlgorithm
 )

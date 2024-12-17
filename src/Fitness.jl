@@ -3,13 +3,15 @@ module Fitness
 using ..Types
 
 """
-Calculates the negative Rosenbrock function value for a given vector.
+    rosenbrock_fitness(values::Vector{Float64})::Float64
+
+Calculates 100 devided by the Rosenbrock function value for a given vector.
 
 # Arguments
 - `values`: A vector of at least two Float64 values.
 
 # Returns
-- The negative Rosenbrock function value as a Float64.
+- 100 devided by the Rosenbrock function value as a Float64.
 """
 function rosenbrock_fitness(values::Vector{Float64})::Float64
     m = length(values)
