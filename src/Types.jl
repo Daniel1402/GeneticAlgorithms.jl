@@ -1,14 +1,27 @@
 module Types
 
-abstract type Gene end
-abstract type Chromosome <: AbstractVector{Gene} end
-abstract type Population <: AbstractVector{Chromosome} end
-abstract type SelectionStrategy end
+abstract type PopulationInitializationMethod end
+abstract type SelectionMethod end
 abstract type CrossoverMethod end
 abstract type MutationMethod end
 
-# TODO
+abstract type Chromosome end
 
-export Gene, Chromosome, SelectionStrategy, CrossoverMethod, MutationMethod
+struct Float64Chromosome <: Chromosome
+    genes::Vector{Float64}
+end
 
+struct IntegerChromosome <: Chromosome
+    genes::Vector{Integer}
+end
+
+struct BoolChromosome <: Chromosome
+    genes::Vector{Bool}
+end
+
+struct Population{T<:Chromosome}
+    chromosomes::Vector{T}
+end
+
+export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome, Float64Chromosome, IntegerChromosome, BoolChromosome
 end

@@ -1,0 +1,60 @@
+refactor the tests to apply to the new format of the SinglePointCrossover beeing a struct
+-->
+using Test
+using GeneticAlgorithms.Crossover
+
+@testset "Crossover.jl" begin
+    chromosome1 = [1, 2, 3, 4, 5]
+    chromosome2 = [6, 7, 8, 9, 10]
+
+    crossover = SinglePointCrossover()
+    offspring1, offspring2 = crossover(chromosome1, chromosome2)
+
+    flipped = false
+    isValid = true
+
+    for i in eachindex(offspring1)
+        if offspring1[i] != chromosome1[i] && !flipped
+            flipped = true
+            @test offspring1[i] == chromosome2[i]
+            @test offspring2[i] == chromosome1[i]
+            continue
+        end
+
+        if flipped && offspring1[i] != chromosome2[i]
+            isValid = false
+            break
+        end
+
+        if flipped && offspring2[i] != chromosome1[i]
+            isValid = false
+            break
+        end
+
+        if !flipped && offspring1[i] != chromosome1[i]
+            isValid = false
+            break
+        end
+
+        if !flipped && offspring2[i] != chromosome2[i]
+            isValid = false
+            break
+        end
+    end
+
+    @test isValid
+end
+--------------------
+refactor the outcommented tests in style of the not outcommented tests above
+-->
+    population_initialization = RealUniformInitialization(20, 50, (-14.3, 18.2))
+    population = population_initialization()
+    @test length(population.chromosomes) == 20
+    @test all([length(population.chromosomes[i].genes) == 50 for i in 1:20])
+    @test all([all([chromosome.genes[i] <= 18.2 && chromosome.genes[i] >= -14.3 for i in 1:length(chromosome.genes)]) for chromosome in population.chromosomes])
+
+    @test_throws ArgumentError RealUniformInitialization(0, 0, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(-1, 0, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(0, -1, (0.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(3, 1, (2, 1))
+    @test_throws ArgumentError RealUniformInitialization(3, 1, (1, 1))
