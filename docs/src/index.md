@@ -11,5 +11,5 @@ Documentation for [GeneticAlgorithms](https://github.com/Daniel1402/GeneticAlgor
 ```
 
 ```@autodocs
-Modules = [GeneticAlgorithms, GeneticAlgorithms.PopulationInitialization, GeneticAlgorithms.Selection, GeneticAlgorithms.Fitness, GeneticAlgorithms.Mutation, GeneticAlgorithms.Utils]
+Modules = [GeneticAlgorithms, GeneticAlgorithms.PopulationInitialization, GeneticAlgorithms.Selection, GeneticAlgorithms.Fitness, GeneticAlgorithms.Mutation, GeneticAlgorithms.Utils, GeneticAlgorithms.Crossover.SinglePointCrossover]
 ```
