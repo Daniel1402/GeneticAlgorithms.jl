@@ -63,21 +63,21 @@ function optimize(
 
     fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
 
-    best_chromosomes::Vector{Tuple{Float64, Float64}} = []
+    best_chromosomes::Vector{Tuple{Float64,Float64}} = []
 
     for generation in 1:genetic_algorithm.max_generations
         # Sort population by fitness
         sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
-        population = Population(population.chromosomes[sorted_population])
+        population = population[sorted_population]
         fitness_scores = fitness_scores[sorted_population]
 
         println("Generation $generation | Best Fitness: $(fitness_scores[1])")
 
-        println("Best Individual: $(population.chromosomes[1].genes)")
+        println("Best Individual: $(population[1].genes)")
         # Elitism (Use the best individual for next generation)
-        new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
+        new_population = genetic_algorithm.elitism ? [population[1]] : []
         # Generate new generation
-        while length(new_population) < length(population.chromosomes)
+        while length(new_population) < length(population)
             parent1, parent2 = select(genetic_algorithm.selection_strategy, population, fitness_scores)
             offspring1, offspring2 = crossover(genetic_algorithm.crossover_method, parent1, parent2)
 
@@ -92,24 +92,24 @@ function optimize(
             push!(new_population, offspring1)
             push!(new_population, offspring2)
         end
-        new_population = new_population[1:length(population.chromosomes)] # Trim excess individuals
-        population = Population(new_population)
+        new_population = new_population[1:length(population)] # Trim excess individuals
+        population = new_population
 
         # Recalculate fitness scores for the new population
-        fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
-    
+        fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population]
+
         # Add best Chromosome for visualization
-        push!(best_chromosomes, Tuple(population.chromosomes[1].genes[1:2]))
+        push!(best_chromosomes, Tuple(population[1][1:2]))
     end
 
     # Final sort of the population
     sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
-    population = Population(population.chromosomes[sorted_population])
+    population = Population(population[sorted_population])
 
     # Visualize the result 
     # TODO support more than 2 dimensions
     f(x, y) = genetic_algorithm.fitness_function([x, y])
-    # points = [Tuple(population.chromosomes[1].genes[1:2])]
+    # points = [Tuple(population[1].genes[1:2])]
     x_center, y_center = best_chromosomes[1]
     x_range = (x_center - 2.0, x_center + 2.0)
     y_range = (y_center - 2.0, y_center + 2.0)
@@ -117,7 +117,7 @@ function optimize(
 
     savefig(plt, "result.png")
 
-    return population.chromosomes[1]
+    return population[1]
 end
 
 function initialize_population(strategy::P) where {P<:PopulationInitializationMethod}
@@ -137,7 +137,7 @@ function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome
 end
 
 function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
-    return fitness_function(individual.genes)
+    return fitness_function(individual)
 end
 
 

@@ -10,11 +10,11 @@ Performs Roulette Wheel Selection on a population based on fitness scores, retur
 Selection is based on the cumulative probabilities of the fitness scores. 
 """
 function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::Vector{Float64}, rand_generator::Function=rand)::Tuple{T,T} where {T<:Chromosome}
-    if size(population.chromosomes, 1) != length(fitness_scores)
+    if size(population, 1) != length(fitness_scores)
         throw(ArgumentError("Population and fitness scores must have the same length"))
     end
 
-    if size(population.chromosomes, 1) <= 1
+    if size(population, 1) <= 1
         throw(ArgumentError("Population must have at least 2 individuals"))
     end
 
@@ -26,8 +26,8 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
         throw(ArgumentError("Fitness scores cannot all be zero"))
     end
 
-    if size(population.chromosomes, 1) == 2
-        return population.chromosomes[1], population.chromosomes[2]
+    if size(population, 1) == 2
+        return population[1], population[2]
     end
 
     # Helper function to select an index based on the fitness scores
@@ -50,7 +50,7 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
     # Adjust the index to account for the removed element
     p2_index += (p2_index >= p1_index ? 1 : 0)
 
-    return population.chromosomes[p1_index], population.chromosomes[p2_index]
+    return population[p1_index], population[p2_index]
 end
 
 

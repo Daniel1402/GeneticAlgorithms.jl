@@ -32,30 +32,30 @@ end
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::Float64Chromosome)::Float64Chromosome where {T<:Float64}
-    mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
-    return Float64Chromosome(chromosome.genes .+ (mask .&& random_additions))
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Float64Chromosome where {T<:Float64}
+    mask = rand(Uniform(0, 1), size(chromosome)) .< c.mutation_rate
+    random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome))
+    return Float64Chromosome(chromosome .+ (mask .&& random_additions))
 end
 
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::IntegerChromosome)::IntegerChromosome where {T<:Integer}
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::IntegerChromosome where {T<:Integer}
     if !all(c.mutation_interval[i] isa Integer for i in 1:2)
         throw(ArgumentError("Mutation interval must be of type Integer"))
     end
-    mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
-    return IntegerChromosome(chromosome.genes .+ (mask .&& random_additions))
+    mask = rand(Uniform(0, 1), size(chromosome)) .< c.mutation_rate
+    random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome))
+    return IntegerChromosome(chromosome .+ (mask .&& random_additions))
 end
 
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::BoolChromosome)::BoolChromosome where {T<:Bool}
-    mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    return BoolChromosome(chromosome.genes .⊻ mask) # bitwise XOR
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::BoolChromosome where {T<:Bool}
+    mask = rand(Uniform(0, 1), size(chromosome)) .< c.mutation_rate
+    return BoolChromosome(chromosome .⊻ mask) # bitwise XOR
 end
 
 export RealGeneMutation

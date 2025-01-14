@@ -5,23 +5,9 @@ abstract type SelectionMethod end
 abstract type CrossoverMethod end
 abstract type MutationMethod end
 
-abstract type Chromosome end
+const Chromosome = Array{T,1} where {T}
 
-struct Float64Chromosome <: Chromosome
-    genes::Vector{Float64}
-end
+const Population = Array{Chromosome,1}
 
-struct IntegerChromosome <: Chromosome
-    genes::Vector{Integer}
-end
-
-struct BoolChromosome <: Chromosome
-    genes::Vector{Bool}
-end
-
-struct Population{T<:Chromosome}
-    chromosomes::Vector{T}
-end
-
-export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome, Float64Chromosome, IntegerChromosome, BoolChromosome
+export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
 end

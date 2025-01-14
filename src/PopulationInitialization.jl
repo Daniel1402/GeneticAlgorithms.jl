@@ -30,12 +30,12 @@ struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     end
 end
 
-function (c::RealUniformInitialization{T})()::Population{Float64Chromosome} where {T<:Float64}
-    return Population([Float64Chromosome(rand(Uniform(c.interval[1], c.interval[2]), c.chromosome_size)) for _ in 1:c.population_size])
+function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Float64}
+    return [rand(Uniform(c.interval[1], c.interval[2]), c.chromosome_size) for _ in 1:c.population_size]
 end
 
-function (c::RealUniformInitialization{T})()::Population{IntegerChromosome} where {T<:Integer}
-    return Population([IntegerChromosome(rand((c.interval[1], c.interval[2]), c.chromosome_size)) for _ in 1:c.population_size])
+function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Integer}
+    return [rand((c.interval[1], c.interval[2]), c.chromosome_size) for _ in 1:c.population_size]
 end
 
 
