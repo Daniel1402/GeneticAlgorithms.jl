@@ -32,30 +32,33 @@ end
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::Float64Chromosome)::Float64Chromosome where {T<:Float64}
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Float64}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
-    return Float64Chromosome(chromosome.genes .+ (mask .&& random_additions))
+    return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::IntegerChromosome)::IntegerChromosome where {T<:Integer}
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Integer}
     if !all(c.mutation_interval[i] isa Integer for i in 1:2)
         throw(ArgumentError("Mutation interval must be of type Integer"))
     end
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
-    return IntegerChromosome(chromosome.genes .+ (mask .&& random_additions))
+    return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
 """
     Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
 """
-function (c::RealGeneMutation{T})(chromosome::BoolChromosome)::BoolChromosome where {T<:Bool}
+function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    return BoolChromosome(chromosome.genes .⊻ mask) # bitwise XOR
+    @info mask
+    a = chromosome.genes .⊻ mask
+    @info a
+    return Chromosome(a) # bitwise XOR
 end
 
 export RealGeneMutation
