@@ -108,20 +108,8 @@ function optimize(
     # Final sort of the population
     sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
     population = Population(population.chromosomes[sorted_population])
-
-    # Visualize the result 
-    # TODO move this
-    if genetic_algorithm.fitness_function == Fitness.rosenbrock_fitness
-        f(x, y) = genetic_algorithm.fitness_function([x, y])
-        # points = [Tuple(population.chromosomes[1].genes[1:2])]
-        x_center, y_center = best_chromosomes[end]
-        x_range = (x_center - 2.0, x_center + 2.0)
-        y_range = (y_center - 2.0, y_center + 2.0)
-        plt = Utils.visualize_function_with_contours(f, x_range=x_range, y_range=y_range, points=best_chromosomes)
-        savefig(plt, "result.png")
-    else
-        # TODO sudoku fitness visualization
-    end
+ 
+    Utils.visualize_results(genetic_algorithm.fitness_function, best_chromosomes)
 
     return population.chromosomes[1]
 end
