@@ -2,14 +2,14 @@ using Test
 using GeneticAlgorithms.Selection
 using GeneticAlgorithms.Types
 
-population = Population([IntegerChromosome([1, 2, 3]), IntegerChromosome([4, 5, 6]), IntegerChromosome([7, 8, 9]), IntegerChromosome([10, 11, 12])])
+population = Population([Chromosome([1, 2, 3]), Chromosome([4, 5, 6]), Chromosome([7, 8, 9]), Chromosome([10, 11, 12])])
 fitness_scores = [10.0, 20.0, 30.0, 40.0]
 
 @testset "Roulette Wheel Selection" begin
     rouletteWheelSelection = RouletteWheelSelection()
     # Test: ArgumentErrors
     @test_throws ArgumentError rouletteWheelSelection(population, [10.0, 20.0]) # Different lengths
-    @test_throws ArgumentError rouletteWheelSelection(Population([IntegerChromosome([1, 2, 3])]), [10.0]) # less than 2 individuals
+    @test_throws ArgumentError rouletteWheelSelection(Population([Chromosome([1, 2, 3])]), [10.0]) # less than 2 individuals
     @test_throws ArgumentError rouletteWheelSelection(population, [-10.0, 20.0, 30.0, 40.0]) # Negative fitness scores
 
     test1_parent1, test1_parent2 = rouletteWheelSelection(population, fitness_scores)
@@ -31,7 +31,7 @@ fitness_scores = [10.0, 20.0, 30.0, 40.0]
 
 
     # Test: Fitness scores with zero values
-    zero_fitness_population = Population([IntegerChromosome([1, 2, 3]), IntegerChromosome([4, 5, 6]), IntegerChromosome([7, 8, 9])])
+    zero_fitness_population = Population([Chromosome([1, 2, 3]), Chromosome([4, 5, 6]), Chromosome([7, 8, 9])])
     zero_fitness_scores = [10.0, 0.0, 30.0]
     test6_parent1, test6_parent2 = rouletteWheelSelection(zero_fitness_population, zero_fitness_scores)
 
