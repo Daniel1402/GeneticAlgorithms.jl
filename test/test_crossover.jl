@@ -6,8 +6,8 @@ using GeneticAlgorithms.Types
     chrom1_values = [1, 2, 3, 4, 5]
     chrom2_values = [6, 7, 8, 9, 10]
 
-    chrom1 = IntegerChromosome(chrom1_values)
-    chrom2 = IntegerChromosome(chrom2_values)
+    chrom1 = Chromosome(chrom1_values)
+    chrom2 = Chromosome(chrom2_values)
 
 
     crossover = SinglePointCrossover()
