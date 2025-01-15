@@ -14,28 +14,37 @@ The type is determined by the `interval`.
 struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     population_size::Int64
     chromosome_size::Int64
-    intervals::Vector{Tuple{T,T}}
+    intervals::Vector{Tuple{T, T}}
 
-    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, intervals::Union{Tuple{T,T}, Vector{Tuple{T,T}}}) where {T<:Real}
-        if typeof(intervals) <: Tuple
-            intervals = fill(intervals, chromosome_size)
-        elseif length(intervals) != chromosome_size
-            throw(ArgumentError("Number of intervals must match the chromosome size."))
-        end
-
-        for interval in intervals
-            if interval[1] >= interval[2]
-                throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
-            end
-        end
+    function validate_inputs!(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
         if population_size <= 0
             throw(ArgumentError("Population size must be greater than zero."))
         end
         if chromosome_size <= 0
             throw(ArgumentError("Chromosome size must be greater than zero."))
         end
+        if length(intervals) != chromosome_size
+            throw(ArgumentError("Number of intervals must match the chromosome size."))
+        end
+        for interval in intervals
+            if interval[1] >= interval[2]
+                throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
+            end
+        end
+    end
 
-        new{eltype(intervals[1])}(population_size, chromosome_size, intervals)
+    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T, T}) where {T<:Real}
+        if interval[1] >= interval[2]
+            throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
+        end
+        intervals = fill(interval, chromosome_size)
+        validate_inputs!(population_size, chromosome_size, intervals)
+        new{T}(population_size, chromosome_size, intervals)
+    end
+
+    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
+        validate_inputs!(population_size, chromosome_size, intervals)
+        new{T}(population_size, chromosome_size, intervals)
     end
 end
 
