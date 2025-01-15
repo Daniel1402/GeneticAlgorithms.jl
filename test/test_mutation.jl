@@ -18,9 +18,9 @@ using GeneticAlgorithms.Types
     mutated_genes = mutation_int(Chromosome([0, 0])).genes
     @test all(mutated_genes .>= 0 .& mutated_genes .<= 17)
 
-    # mutation_bool = RealGeneMutation(1.0, (false, true))
-    # mutated_genes = mutation_bool(Chromosome([true, false, true, false])).genes
-    # @test all(mutated_genes .== false .|| mutated_genes .== true)
+    mutation_bool = RealGeneMutation(1.0, (false, true))
+    mutated_genes = mutation_bool(Chromosome([true, false, true, false])).genes
+    @test all(mutated_genes .== false .|| mutated_genes .== true)
 
     @test_throws ArgumentError RealGeneMutation(-0.2, (0.0, 1.1))
     @test_throws ArgumentError RealGeneMutation(1.1, (0.0, 1.1))

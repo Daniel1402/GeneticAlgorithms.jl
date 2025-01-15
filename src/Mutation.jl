@@ -55,10 +55,8 @@ end
 """
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    @info mask
-    a = chromosome.genes .⊻ mask
-    @info a
-    return Chromosome(a) # bitwise XOR
+    a = [gene ⊻ m for (gene, m) in zip(chromosome.genes, mask)]
+    return Chromosome(a) 
 end
 
 export RealGeneMutation
