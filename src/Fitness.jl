@@ -28,6 +28,23 @@ function rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
     return 100 / (result + 1)
 end
 
+function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
+    fitness = 0
+    # Transpose the chromosome to get the columns
+    sudoku_matrix = reduce(hcat, chromosome.genes)
+    transposed_sudoku = sudoku_matrix'
+    for row in transposed_sudoku
+        fitness += length(Set(row))
+    end
+
+    for i in 1:3:9
+        for j in 1:3:9
+            fitness += length(Set(sudoku_matrix[i:i+2, j:j+2]))
+        end
+    end
+
+end
+
 export rosenbrock_fitness, sumFitness
 
 end
