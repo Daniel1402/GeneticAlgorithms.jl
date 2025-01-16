@@ -70,9 +70,9 @@ struct SudokuInitialization <: PopulationInitializationMethod
 end
 
 function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
-    values = Set(1:9)
     
     function new_chromosome()
+        values = Set(1:9)
         chromosome = deepcopy(c.initial)
         for column in chromosome
             initial_values = Set(column)
