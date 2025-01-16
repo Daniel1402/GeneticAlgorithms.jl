@@ -1,7 +1,9 @@
 module Mutation
 
-using ..Types
 using Distributions
+using Random
+
+using ..Types
 
 
 """
@@ -63,11 +65,11 @@ struct SudokuMutation <: MutationMethod
     mutation_rate::Float64
     initial::Vector{Vector{Int64}} #9x9 initial grid
 
-    function SudokuMutation(mutation_rate::Float64)
+    function SudokuMutation(mutation_rate::Float64, initial::Vector{Vector{Int64}})
         if mutation_rate < 0 || mutation_rate > 1
             throw(ArgumentError("Mutation rate must be between 0 and 1"))
         end
-        new(mutation_rate, mutation_interval)
+        new(mutation_rate, initial)
     end
 end
 
@@ -75,7 +77,8 @@ function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
 
     chromosome = deepcopy(c.initial)
-    for column in chromosome
+    values = Set(1:9)
+    for (i, column) in enumerate(chromosome)
         if mask[i]
             initial_values = Set(column)
             new_values = setdiff(values, initial_values, 0)
@@ -89,7 +92,7 @@ function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{
         end
     end
    
-    return chromosome
+    return Chromosome(chromosome)
 end
 
 

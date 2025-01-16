@@ -1,6 +1,8 @@
 module PopulationInitialization
 
 using Distributions
+using Random
+
 using ..Types
 
 """
@@ -61,11 +63,11 @@ struct SudokuInitialization <: PopulationInitializationMethod
     initial::Vector{Vector{Int64}} #9x9 initial grid
     
 
-    function SudokuInitialization(population_size::Int64, chromosome_size::Int64)
+    function SudokuInitialization(population_size::Int64, initial::Vector{Vector{Int64}})
         if population_size <= 0
             throw(ArgumentError("Population size must be greater zero."))
         end
-        new(population_size, chromosome_size)
+        new(population_size, initial)
     end
 end
 

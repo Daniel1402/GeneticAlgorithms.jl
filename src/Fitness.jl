@@ -42,7 +42,7 @@ function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
             fitness += length(Set(sudoku_matrix[i:i+2, j:j+2]))
         end
     end
-
+    return fitness
 end
 
 export rosenbrock_fitness, sudoku_fitness
