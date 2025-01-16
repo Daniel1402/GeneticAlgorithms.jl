@@ -59,5 +59,39 @@ function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} wher
     return Chromosome(a) 
 end
 
+struct SudokuMutation <: MutationMethod
+    mutation_rate::Float64
+    initial::Vector{Vector{Int64}} #9x9 initial grid
+
+    function SudokuMutation(mutation_rate::Float64)
+        if mutation_rate < 0 || mutation_rate > 1
+            throw(ArgumentError("Mutation rate must be between 0 and 1"))
+        end
+        new(mutation_rate, mutation_interval)
+    end
+end
+
+function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{Vector{Int64}}
+    mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
+
+    chromosome = deepcopy(c.initial)
+    for column in chromosome
+        if mask[i]
+            initial_values = Set(column)
+            new_values = setdiff(values, initial_values, 0)
+            new_values = collect(new_values)
+            new_values = shuffle(new_values)
+            for i in eachindex(column)
+                if column[i] == 0
+                    column[i] = pop!(new_values)
+                end
+            end
+        end
+    end
+   
+    return chromosome
+end
+
+
 export RealGeneMutation
 end
