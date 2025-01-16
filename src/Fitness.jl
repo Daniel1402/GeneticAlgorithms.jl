@@ -45,6 +45,6 @@ function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
 
 end
 
-export rosenbrock_fitness, sumFitness
+export rosenbrock_fitness, sudoku_fitness
 
 end

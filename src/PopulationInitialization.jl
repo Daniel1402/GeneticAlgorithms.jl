@@ -93,6 +93,6 @@ function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
     
 end
 
-export RealUniformInitialization
+export RealUniformInitialization, SudokuInitialization
 
 end

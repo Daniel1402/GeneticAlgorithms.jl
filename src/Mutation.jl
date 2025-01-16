@@ -93,5 +93,5 @@ function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{
 end
 
 
-export RealGeneMutation
+export RealGeneMutation, SudokuMutation
 end
