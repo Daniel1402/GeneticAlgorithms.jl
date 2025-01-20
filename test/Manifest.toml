@@ -2,7 +2,7 @@
 
 julia_version = "1.10.6"
 manifest_format = "2.0"
-project_hash = "2f3746fba3ad1d52f352cfe9a816a94d27885fed"
+project_hash = "72575a1241ba6258d7496b2901d3dfd09363db15"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -240,6 +240,7 @@ version = "3.4.0+2"
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Qt6Wayland_jll", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
 git-tree-sha1 = "424c8f76017e39fdfcdbb5935a8e6742244959e8"
+pinned = true
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
 version = "0.73.10"
 
