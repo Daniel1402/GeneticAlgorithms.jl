@@ -65,6 +65,9 @@ function optimize(
 
     best_chromosomes::Vector{Tuple{Float64, Float64}} = []
 
+    # Add a random starting point for visualization
+    push!(best_chromosomes, Tuple(population.chromosomes[1].genes[1:2]))
+
     for generation in 1:genetic_algorithm.max_generations
         # Sort population by fitness
         sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
@@ -72,10 +75,11 @@ function optimize(
         fitness_scores = fitness_scores[sorted_population]
 
         println("Generation $generation | Best Fitness: $(fitness_scores[1])")
-
         println("Best Individual: $(population.chromosomes[1].genes)")
+
         # Elitism (Use the best individual for next generation)
         new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
+        
         # Generate new generation
         while length(new_population) < length(population.chromosomes)
             parent1, parent2 = select(genetic_algorithm.selection_strategy, population, fitness_scores)
@@ -87,7 +91,6 @@ function optimize(
             if rand() < genetic_algorithm.mutation_rate
                 offspring2 = mutate(genetic_algorithm.mutation_method, offspring2)
             end
-
 
             push!(new_population, offspring1)
             push!(new_population, offspring2)
@@ -105,18 +108,7 @@ function optimize(
     # Final sort of the population
     sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
     population = Population(population.chromosomes[sorted_population])
-
-    # Visualize the result 
-    # TODO support more than 2 dimensions
-    f(x, y) = genetic_algorithm.fitness_function(Chromosome([x, y]))
-    
-    # points = [Tuple(population.chromosomes[1].genes[1:2])]
-    x_center, y_center = best_chromosomes[1]
-    x_range = (x_center - 2.0, x_center + 2.0)
-    y_range = (y_center - 2.0, y_center + 2.0)
-    plt = Utils.visualize_function_with_contours(f, x_range=x_range, y_range=y_range, points=best_chromosomes)
-
-    savefig(plt, "result.png")
+    Utils.visualize_results(genetic_algorithm.fitness_function, best_chromosomes)
 
     return population.chromosomes[1]
 end
