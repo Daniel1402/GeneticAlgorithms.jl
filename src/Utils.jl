@@ -2,6 +2,7 @@ module Utils
 
 using Plots
 using ..Fitness
+using ..Types
 
 gr() # set gr backend
 
@@ -23,7 +24,7 @@ visualize_results(Fitness.rosenbrock_fitness, [(0.0, 0.0), (1.0, 1.0)])
 """
 function visualize_results(fitness_function::Function, best_chromosomes)
     if fitness_function == Fitness.rosenbrock_fitness
-        f(x, y) = fitness_function([x, y])
+        f(x, y) = fitness_function(Chromosome([x, y]))
         
         # Automatically center result
         x_center, y_center = best_chromosomes[end]
