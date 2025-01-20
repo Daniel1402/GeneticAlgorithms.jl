@@ -2,7 +2,7 @@ using Test
 
 using GeneticAlgorithms.PopulationInitialization
 
-@testset "PopulationInitialization.jl" begin
+@testset "RealUniformInitialization" begin
     population_initialization = RealUniformInitialization(60, 5, (0.0, 1.0))
     population = population_initialization()
     @test length(population.chromosomes) == 60
@@ -34,4 +34,57 @@ end
 
     @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0)])
     @test_throws ArgumentError RealUniformInitialization(10, 2, (1.0, 1.0))
+
+end
+
+@testset "SudokuInitialization" begin
+    test_sudoku = [
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+    
+    @test_throws ArgumentError SudokuInitialization(-1, test_sudoku)
+    @test_throws ArgumentError SudokuInitialization(10, [[0, 0, 0, 4, 1, 9, 0, 0, 5],
+    [0, 0, 0, 0, 8, 0, 0, 7, 9]])
+    @test_throws ArgumentError SudokuInitialization(10, [
+        [5, 0, 0, 7, 0, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7]
+    ])
+
+    population_initialization = SudokuInitialization(30, test_sudoku)
+    population = population_initialization()
+    # The initial cell values should be contained in each chromosome.
+    cells_initialized = true
+    for chromosome in population.chromosomes
+        for i in eachindex(chromosome.genes)
+            bool_vec = chromosome.genes[i] .== test_sudoku[i]
+            bool_vec = bool_vec .|| test_sudoku[i] .== 0
+            cells_initialized &= reduce(|, bool_vec)
+        end
+    end
+    @test cells_initialized
+
+    # Each column should contain a permutation of [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    no_duplicates_in_columns = true
+    sudoku_values = Set(1:9)
+    for chromosome in population.chromosomes
+        for column in chromosome.genes
+            no_duplicates_in_columns &= length(setdiff(sudoku_values, Set(column))) == 0
+        end
+    end
+    @test no_duplicates_in_columns
 end

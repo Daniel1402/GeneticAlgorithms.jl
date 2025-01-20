@@ -63,6 +63,7 @@ end
 
 Creates a population of `population_size` including chromosomes of `9x9` size. 
 Each gene resembles a column in a Sudoku puzzle. The initial values are taken from the `initial` grid. 
+`initial` must be of size 9x9.
 The remaining values are filled with the missing random values. 
 The initialization ensure that each column contains the values `1-9` exactly once.
 """
@@ -73,6 +74,9 @@ struct SudokuInitialization <: PopulationInitializationMethod
     function SudokuInitialization(population_size::Int64, initial::Vector{Vector{Int64}})
         if population_size <= 0
             throw(ArgumentError("Population size must be greater zero."))
+        end
+        if size(initial, 1) != 9 || ~all(size.(initial, 1) .== 9)
+            throw(ArgumentError("Initial Sudoku grid must be 9x9"))
         end
         new(population_size, initial)
     end

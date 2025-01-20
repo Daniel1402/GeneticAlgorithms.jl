@@ -32,14 +32,12 @@ end
     sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
 
 Calculates the fitness of a Sudoku puzzle represented by a chromosome.
-The fitness value is the sum of the number of unique values in each row and 3x3 subgrid.
+The fitness value is the sum of the number of distinct values in each row and 3x3 subgrid.
 """
 function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
     fitness = 0
-    # Transpose the chromosome to get the columns
     sudoku_matrix = reduce(hcat, chromosome.genes)
-    transposed_sudoku = sudoku_matrix'
-    for row in transposed_sudoku
+    for row in eachrow(sudoku_matrix)
         fitness += length(Set(row))
     end
 

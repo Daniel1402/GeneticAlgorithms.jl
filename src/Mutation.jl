@@ -60,7 +60,7 @@ end
     SudokuMutation(mutation_rate::Float64, initial::Vector{Vector{Int64}})
 
 Mutation method for Sudoku puzzles. The mutation is applied column-wise with probability `mutation_rate`.
-Ensures that the initial values of `initial` are not changed and the remaining values are shuffled.
+`initial` must be of size 9x9. Ensures that the initial values of `initial` are not changed and the remaining values are shuffled.
 """
 struct SudokuMutation <: MutationMethod
     mutation_rate::Float64
@@ -69,6 +69,9 @@ struct SudokuMutation <: MutationMethod
     function SudokuMutation(mutation_rate::Float64, initial::Vector{Vector{Int64}})
         if mutation_rate < 0 || mutation_rate > 1
             throw(ArgumentError("Mutation rate must be between 0 and 1"))
+        end
+        if size(initial, 1) != 9 || ~all(size.(initial, 1) .== 9)
+            throw(ArgumentError("Initial Sudoku grid must be 9x9"))
         end
         new(mutation_rate, initial)
     end
