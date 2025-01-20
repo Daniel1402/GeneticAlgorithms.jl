@@ -5,23 +5,20 @@ abstract type SelectionMethod end
 abstract type CrossoverMethod end
 abstract type MutationMethod end
 
-abstract type Chromosome end
 
-struct Float64Chromosome <: Chromosome
-    genes::Vector{Float64}
+struct Chromosome{T}
+    genes::Vector{T}
 end
 
-struct IntegerChromosome <: Chromosome
-    genes::Vector{Integer}
-end
-
-struct BoolChromosome <: Chromosome
-    genes::Vector{Bool}
-end
+Base.length(c::Chromosome) = length(c.genes)
+Base.getindex(c::Chromosome, i::Int) = c.genes[i]
+Base.iterate(c::Chromosome) = iterate(c.genes)
+Base.iterate(c::Chromosome, state) = iterate(c.genes, state)
 
 struct Population{T<:Chromosome}
     chromosomes::Vector{T}
 end
 
-export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome, Float64Chromosome, IntegerChromosome, BoolChromosome
+export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
+
 end

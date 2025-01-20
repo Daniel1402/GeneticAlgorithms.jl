@@ -13,7 +13,7 @@ using GeneticAlgorithms.Fitness
         savefig(plt, "sin*cos.png")
 
         # Rosenbrock
-        f(x, y) = rosenbrock_fitness([x, y])
+        f(x, y) = rosenbrock_fitness(Chromosome([x, y]))
         path = [(1.0, 1.0)]
         plt = visualize_function_with_contours(f, x_range=(-2.0, 2.0), y_range=(-1.0, 3.0), path=path)
         savefig(plt, "rosenbrock.png")

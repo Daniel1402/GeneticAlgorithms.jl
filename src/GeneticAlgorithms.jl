@@ -108,7 +108,6 @@ function optimize(
     # Final sort of the population
     sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
     population = Population(population.chromosomes[sorted_population])
- 
     Utils.visualize_results(genetic_algorithm.fitness_function, best_chromosomes)
 
     return population.chromosomes[1]
@@ -131,7 +130,7 @@ function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome
 end
 
 function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
-    return fitness_function(individual.genes)
+    return fitness_function(individual)
 end
 
 
