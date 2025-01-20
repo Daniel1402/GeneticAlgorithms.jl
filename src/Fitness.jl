@@ -8,13 +8,13 @@ using ..Types
 Calculates 100 divided by the Rosenbrock function value for a given vector.
 
 # Arguments
-- `values`: A vector of at least two Float64 values.
+- `chromosome`: A chromosome containing the genes to evaluate.
 
 # Returns
 - 100 divided by the Rosenbrock function value as a Float64.
 """
-function rosenbrock_fitness(values::Chromosome{Float64})::Float64
-    genes = values.genes
+function rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
+    genes = chromosome.genes
     m = length(genes)
     if m < 2
         throw(ArgumentError("Rosenbrock function requires at least two dimensions."))
