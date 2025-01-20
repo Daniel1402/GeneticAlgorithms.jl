@@ -16,7 +16,7 @@ struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     chromosome_size::Int64
     intervals::Vector{Tuple{T, T}}
 
-    function validate_inputs!(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
+    function validate_inputs(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
         if population_size <= 0
             throw(ArgumentError("Population size must be greater than zero."))
         end
