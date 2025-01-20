@@ -7,9 +7,11 @@ using ..Types
 
 
 """
-    Defines the mutation of genes of real values (currently only `Float64` and `Integer` types (including `Bool`))
-    Mutation is applied for each gene on its own with probability `mutation_rate` with values from the uniform
-    distribution in the interval `mutation_interval`.
+    RealGeneMutation(mutation_rate::Float64, mutation_interval::Tuple{T,T})
+
+Defines the mutation of genes of real values (currently only `Float64` and `Integer` types (including `Bool`))
+Mutation is applied for each gene on its own with probability `mutation_rate` with values from the uniform
+distribution in the interval `mutation_interval`.
 """
 struct RealGeneMutation{T<:Real} <: MutationMethod
     mutation_rate::Float64
@@ -31,18 +33,13 @@ struct RealGeneMutation{T<:Real} <: MutationMethod
 end
 
 
-"""
-    Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
-"""
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Float64}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
-"""
-    Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
-"""
+
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Integer}
     if !all(c.mutation_interval[i] isa Integer for i in 1:2)
         throw(ArgumentError("Mutation interval must be of type Integer"))
@@ -52,15 +49,19 @@ function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} wher
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
-"""
-    Mutates the genes with a probability of c.mutation_rate and values in the interval `c.mutation_interval`.
-"""
+
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     a = [gene ⊻ m for (gene, m) in zip(chromosome.genes, mask)]
     return Chromosome(a) 
 end
 
+"""
+    SudokuMutation(mutation_rate::Float64, initial::Vector{Vector{Int64}})
+
+Mutation method for Sudoku puzzles. The mutation is applied column-wise with probability `mutation_rate`.
+Ensures that the initial values of `initial` are not changed and the remaining values are shuffled.
+"""
 struct SudokuMutation <: MutationMethod
     mutation_rate::Float64
     initial::Vector{Vector{Int64}} #9x9 initial grid

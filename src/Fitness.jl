@@ -28,6 +28,12 @@ function rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
     return 100 / (result + 1)
 end
 
+"""
+    sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
+
+Calculates the fitness of a Sudoku puzzle represented by a chromosome.
+The fitness value is the sum of the number of unique values in each row and 3x3 subgrid.
+"""
 function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
     fitness = 0
     # Transpose the chromosome to get the columns
