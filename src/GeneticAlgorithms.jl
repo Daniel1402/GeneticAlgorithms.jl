@@ -23,6 +23,10 @@ parents for the crossover. The `crossover_method` is used to generate offspring
 from the selected parents. The `mutation_method` is used to mutate the offspring.
 The `mutation_rate` is the probability of mutation. If `elitism` is true, the best
 individual from the previous generation is carried over to the next generation.
+If `save_best` is true, the best chromosomes and their fitness scores are saved
+in the `best_chromosomes` and `best_fitness` fields respectively for e.G. visualization.
+Note that the `best_chromosomes` and `best_fitness` fields store `max_generations + 1`
+values, including the initial population.
 """
 
 struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
@@ -34,6 +38,9 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
     mutation_method::M
     mutation_rate::Float64
     elitism::Bool
+    save_best::Bool
+    best_chromosomes::Vector{Chromosome}
+    best_fitness::Vector{Float64}
 
     GeneticAlgorithm(
         initialization_strategy::P,
@@ -44,7 +51,8 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
         elitism::Bool=true,
         max_generations::Int=5,
         mutation_rate::Float64=0.1,
-    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism)
+        save_best::Bool=false
+    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, save_best, [], [])
 end
 
 """
@@ -52,9 +60,6 @@ end
 
 Runs the genetic algorithm with the specified parameters and returns the best individual found.
 
-In this implementation, the function has the side effect of visualizing the Rosenbrock function and 
-the best solutions of each generation in "result.png". That's only a temporary solution and will be 
-replaced by a more flexible visualization method in the future.
 """
 function optimize(
     genetic_algorithm::GeneticAlgorithm
@@ -62,11 +67,6 @@ function optimize(
     population::Population = initialize_population(genetic_algorithm.initialization_strategy)
 
     fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
-
-    best_chromosomes::Vector{Tuple{Float64, Float64}} = []
-
-    # Add a random starting point for visualization
-    push!(best_chromosomes, Tuple(population.chromosomes[1].genes[1:2]))
 
     for generation in 1:genetic_algorithm.max_generations
         # Sort population by fitness
@@ -79,7 +79,7 @@ function optimize(
 
         # Elitism (Use the best individual for next generation)
         new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
-        
+
         # Generate new generation
         while length(new_population) < length(population.chromosomes)
             parent1, parent2 = select(genetic_algorithm.selection_strategy, population, fitness_scores)
@@ -100,16 +100,23 @@ function optimize(
 
         # Recalculate fitness scores for the new population
         fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
-    
+
         # Add best Chromosome for visualization
-        push!(best_chromosomes, Tuple(population.chromosomes[1].genes[1:2]))
+        if genetic_algorithm.save_best
+            push!(genetic_algorithm.best_chromosomes, population.chromosomes[1])
+            push!(genetic_algorithm.best_fitness, fitness_scores[1])
+        end
     end
 
     # Final sort of the population
     sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
     population = Population(population.chromosomes[sorted_population])
-    Utils.visualize_results(genetic_algorithm.fitness_function, best_chromosomes)
+    fitness_scores = fitness_scores[sorted_population]
 
+    if genetic_algorithm.save_best
+        push!(genetic_algorithm.best_chromosomes, population.chromosomes[1])
+        push!(genetic_algorithm.best_fitness, fitness_scores[1])
+    end
     return population.chromosomes[1]
 end
 
@@ -134,5 +141,5 @@ function evaluate_fitness(individual::I, fitness_function::Function) where {I<:C
 end
 
 
-export optimize, Crossover, PopulationInitialization, Selection, GeneticAlgorithm
+export optimize, Crossover, PopulationInitialization, Selection, Mutation, GeneticAlgorithm
 end
