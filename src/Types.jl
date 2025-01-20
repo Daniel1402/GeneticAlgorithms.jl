@@ -10,6 +10,11 @@ struct Chromosome{T}
     genes::Vector{T}
 end
 
+Base.length(c::Chromosome) = length(c.genes)
+Base.getindex(c::Chromosome, i::Int) = c.genes[i]
+Base.iterate(c::Chromosome) = iterate(c.genes)
+Base.iterate(c::Chromosome, state) = iterate(c.genes, state)
+
 struct Population{T<:Chromosome}
     chromosomes::Vector{T}
 end

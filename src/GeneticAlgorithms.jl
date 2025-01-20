@@ -108,7 +108,8 @@ function optimize(
 
     # Visualize the result 
     # TODO support more than 2 dimensions
-    f(x, y) = genetic_algorithm.fitness_function([x, y])
+    f(x, y) = genetic_algorithm.fitness_function(Chromosome([x, y]))
+    
     # points = [Tuple(population.chromosomes[1].genes[1:2])]
     x_center, y_center = best_chromosomes[1]
     x_range = (x_center - 2.0, x_center + 2.0)
@@ -137,7 +138,7 @@ function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome
 end
 
 function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
-    return fitness_function(individual.genes)
+    return fitness_function(individual)
 end
 
 
