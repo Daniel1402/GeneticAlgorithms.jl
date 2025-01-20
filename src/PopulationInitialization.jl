@@ -38,12 +38,12 @@ struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
             throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
         end
         intervals = fill(interval, chromosome_size)
-        validate_inputs!(population_size, chromosome_size, intervals)
+        validate_inputs(population_size, chromosome_size, intervals)
         new{T}(population_size, chromosome_size, intervals)
     end
 
     function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
-        validate_inputs!(population_size, chromosome_size, intervals)
+        validate_inputs(population_size, chromosome_size, intervals)
         new{T}(population_size, chromosome_size, intervals)
     end
 end
