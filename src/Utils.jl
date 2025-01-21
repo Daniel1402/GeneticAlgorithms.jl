@@ -7,7 +7,7 @@ using ..Types
 gr() # set gr backend
 
 """
-    visualize_rosenbrock_results(best_chromosomes::Vector{Chromosome{Float64}}, save_path::String="result.png")
+    visualize_rosenbrock_results(best_chromosomes::Vector{Chromosome}, save_path::String="result.png")
 
 Generates a visualization of the optimization process for the rosenbrock fitness function with given best chromosomes.
 
@@ -21,7 +21,7 @@ visualize_results([Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1
 ```
 
 """
-function visualize_rosenbrock_results(best_chromosomes::Vector{Chromosome{Float64}}, save_path::String="result.png")
+function visualize_rosenbrock_results(best_chromosomes::Vector{T}, save_path::String="result.png") where {T<:Chromosome}
     f(x, y) = Fitness.rosenbrock_fitness(Chromosome([x, y]))
 
     # Automatically center result
