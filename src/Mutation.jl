@@ -79,24 +79,23 @@ end
 
 function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{Vector{Int64}}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-
-    chromosome = deepcopy(c.initial)
+    new_chromosome = deepcopy(chromosome)
     values = Set(1:9)
-    for (i, column) in enumerate(chromosome)
+    for (i, column) in enumerate(c.initial)
         if mask[i]
             initial_values = Set(column)
             new_values = setdiff(values, initial_values, 0)
             new_values = collect(new_values)
             new_values = shuffle(new_values)
-            for i in eachindex(column)
-                if column[i] == 0
-                    column[i] = pop!(new_values)
+            for j in eachindex(column)
+                if column[j] == 0
+                    new_chromosome.genes[i][j] = pop!(new_values)
                 end
             end
         end
     end
    
-    return Chromosome(chromosome)
+    return new_chromosome
 end
 
 

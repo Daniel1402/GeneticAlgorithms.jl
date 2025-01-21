@@ -61,7 +61,7 @@ end
 Runs the genetic algorithm with the specified parameters and returns the best individual found.
 
 """
-function rosenbrock_optimize(
+function optimize(
     genetic_algorithm::GeneticAlgorithm
 )
     population::Population = initialize_population(genetic_algorithm.initialization_strategy)
@@ -117,55 +117,6 @@ function rosenbrock_optimize(
         push!(genetic_algorithm.best_chromosomes, population.chromosomes[1])
         push!(genetic_algorithm.best_fitness, fitness_scores[1])
     end
-    return population.chromosomes[1]
-end
-
-function optimize(
-    genetic_algorithm::GeneticAlgorithm
-)
-    population::Population = initialize_population(genetic_algorithm.initialization_strategy)
-
-    fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
-
-
-    for generation in 1:genetic_algorithm.max_generations
-        # Sort population by fitness
-        sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
-        population = Population(population.chromosomes[sorted_population])
-        fitness_scores = fitness_scores[sorted_population]
-
-        println("Generation $generation | Best Fitness: $(fitness_scores[1])")
-
-        println("Best Individual: $(population.chromosomes[1].genes)")
-        # Elitism (Use the best individual for next generation)
-        new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []
-        # Generate new generation
-        while length(new_population) < length(population.chromosomes)
-            parent1, parent2 = select(genetic_algorithm.selection_strategy, population, fitness_scores)
-            offspring1, offspring2 = crossover(genetic_algorithm.crossover_method, parent1, parent2)
-
-            if rand() < genetic_algorithm.mutation_rate
-                offspring1 = mutate(genetic_algorithm.mutation_method, offspring1)
-            end
-            if rand() < genetic_algorithm.mutation_rate
-                offspring2 = mutate(genetic_algorithm.mutation_method, offspring2)
-            end
-
-
-            push!(new_population, offspring1)
-            push!(new_population, offspring2)
-        end
-        new_population = new_population[1:length(population.chromosomes)] # Trim excess individuals
-        population = Population(new_population)
-
-        # Recalculate fitness scores for the new population
-        fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]
-    
-    end
-
-    # Final sort of the population
-    sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
-    population = Population(population.chromosomes[sorted_population])
     return population.chromosomes[1]
 end
 
