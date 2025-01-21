@@ -28,6 +28,27 @@ function rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
     return 100 / (result + 1)
 end
 
-export rosenbrock_fitness, sumFitness
+"""
+    sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
+
+Calculates the fitness of a Sudoku puzzle represented by a chromosome.
+The fitness value is the sum of the number of distinct values in each row and 3x3 subgrid.
+"""
+function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
+    fitness = 0
+    sudoku_matrix = reduce(hcat, chromosome.genes)
+    for row in eachrow(sudoku_matrix)
+        fitness += length(Set(row))
+    end
+
+    for i in 1:3:9
+        for j in 1:3:9
+            fitness += length(Set(sudoku_matrix[i:i+2, j:j+2]))
+        end
+    end
+    return fitness
+end
+
+export rosenbrock_fitness, sudoku_fitness
 
 end

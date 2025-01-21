@@ -1,6 +1,8 @@
 module PopulationInitialization
 
 using Distributions
+using Random
+
 using ..Types
 
 """
@@ -56,6 +58,52 @@ function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T
     return Population([Chromosome([rand(c.intervals[i][1]:c.intervals[i][2]) for i in 1:c.chromosome_size]) for _ in 1:c.population_size])
 end
 
-export RealUniformInitialization
+"""
+    SudokuInitialization(population_size::Int64, initial::Vector{Vector{Int64}})
+
+Creates a population of `population_size` including chromosomes of `9x9` size. 
+Each gene resembles a column in a Sudoku puzzle. The initial values are taken from the `initial` grid. 
+`initial` must be of size 9x9.
+The remaining values are filled with the missing random values. 
+The initialization ensure that each column contains the values `1-9` exactly once.
+"""
+struct SudokuInitialization <: PopulationInitializationMethod
+    population_size::Int64
+    initial::Vector{Vector{Int64}} #9x9 initial grid
+    
+    function SudokuInitialization(population_size::Int64, initial::Vector{Vector{Int64}})
+        if population_size <= 0
+            throw(ArgumentError("Population size must be greater zero."))
+        end
+        if size(initial, 1) != 9 || ~all(size.(initial, 1) .== 9)
+            throw(ArgumentError("Initial Sudoku grid must be 9x9"))
+        end
+        new(population_size, initial)
+    end
+end
+
+function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
+    function new_chromosome()
+        values = Set(1:9)
+        chromosome = deepcopy(c.initial)
+        for column in chromosome
+            initial_values = Set(column)
+            new_values = setdiff(values, initial_values, 0)
+            new_values = collect(new_values)
+            new_values = shuffle(new_values)
+            for i in eachindex(column)
+                if column[i] == 0
+                    column[i] = pop!(new_values)
+                end
+            end
+        end
+        return Chromosome(chromosome)
+    end
+
+    return Population([new_chromosome() for _ in 1:c.population_size])
+    
+end
+
+export RealUniformInitialization, SudokuInitialization
 
 end
