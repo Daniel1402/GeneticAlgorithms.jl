@@ -5,6 +5,8 @@ using ..Types
 struct RouletteWheelSelection <: SelectionMethod end
 
 """
+    RouletteWheelSelection(population::Population, fitness_scores::Vector{Float64}, rand_generator::Function=rand)
+
 Performs Roulette Wheel Selection on a population based on fitness scores, returning two selected individuals (parents).
 
 Selection is based on the cumulative probabilities of the fitness scores. 

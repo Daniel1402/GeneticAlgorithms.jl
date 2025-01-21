@@ -28,7 +28,6 @@ in the `best_chromosomes` and `best_fitness` fields respectively for e.G. visual
 Note that the `best_chromosomes` and `best_fitness` fields store `max_generations + 1`
 values, including the initial population.
 """
-
 struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
     initialization_strategy::P
     fitness_function::Function

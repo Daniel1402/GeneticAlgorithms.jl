@@ -31,7 +31,7 @@ end
 """
     sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
 
-Calculates the fitness of a Sudoku puzzle represented by a chromosome.
+Calculates the fitness of a Sudoku puzzle represented by the `chromosome``.
 The fitness value is the sum of the number of distinct values in each row and 3x3 subgrid.
 """
 function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
