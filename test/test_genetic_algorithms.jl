@@ -17,7 +17,7 @@ using GeneticAlgorithms.PopulationInitialization
     optimize(ga)
 
     uniform = RealUniformInitialization(100, 2, (-2.0, 2.0))
-    ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, 100, 0.5, true)
+    ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, false, 100, 0.5, true)
     println(optimize(ga_rosenbrock))
     fitness_pre = ga_rosenbrock.best_fitness[1]
     i = 1
@@ -49,6 +49,6 @@ end
     singlePointCrossover = SinglePointCrossover()
     geneMutation = SudokuMutation(0.1, initial)
     fitness_fn = (genes) -> sum(abs.(genes))
-    ga = GeneticAlgorithm(initStrategy, sudoku_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, 1000, 0.4, true)
+    ga = GeneticAlgorithm(initStrategy, sudoku_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, false, 1000, 0.4, true)
     optimize(ga)
 end
