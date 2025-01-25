@@ -68,7 +68,7 @@ Here is an overview of the project's main components:
 
    ```julia
    using GeneticAlgorithms.Utils
-   visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "~/result.png")
+   visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "./result.png")
    ```
 
 ### A Short Introduction to Genetic Algorithms
