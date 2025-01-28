@@ -47,12 +47,12 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
         fitness_function::Function,
         selection_strategy::S,
         crossover_method::C,
-        mutation_method::M,
+        mutation_method::M;
         elitism::Bool=true,
         verbose::Bool=false,
         max_generations::Int=5,
         mutation_rate::Float64=0.1,
-        save_best::Bool=false
+        save_best::Bool=false,
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, verbose, save_best, Vector{Chromosome}(), Vector{Float64}())
 end
 
