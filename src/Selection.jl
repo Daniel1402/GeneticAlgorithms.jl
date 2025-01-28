@@ -54,10 +54,8 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
 
     p1_index = indexSelection(fitness_scores, rand_generator)
 
-    # Filter out the selected index & search for the second parent
     p2_index = indexSelection(fitness_scores[1:end.!=p1_index], rand_generator)
 
-    # Adjust the index to account for the removed element
     p2_index += (p2_index >= p1_index ? 1 : 0)
 
     return population.chromosomes[p1_index], population.chromosomes[p2_index]
