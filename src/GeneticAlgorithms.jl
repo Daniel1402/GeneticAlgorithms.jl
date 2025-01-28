@@ -74,10 +74,10 @@ function optimize(
         sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
         population = Population(population.chromosomes[sorted_population])
         fitness_scores = fitness_scores[sorted_population]
-        
+
         if genetic_algorithm.verbose
-            println("Generation $generation | Best Fitness: $(fitness_scores[1])")
-            println("Best Individual: $(population.chromosomes[1].genes)")
+            @info "Generation $generation | Best Fitness: $(fitness_scores[1])"
+            @info "Best Individual: $(population.chromosomes[1].genes)"
         end
 
         # Elitism (Use the best individual for next generation)
