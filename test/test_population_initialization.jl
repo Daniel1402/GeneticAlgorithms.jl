@@ -9,7 +9,6 @@ using GeneticAlgorithms.PopulationInitialization
     @test all([length(population.chromosomes[i].genes) == 5 for i in 1:60])
     @test all([all([chromosome.genes[i] <= 1 for i in 1:length(chromosome.genes)]) for chromosome in population.chromosomes])
 
-    
     population_initialization = RealUniformInitialization(20, 50, (-14.3, 18.2))
     population = population_initialization()
     @test length(population.chromosomes) == 20
@@ -21,6 +20,9 @@ using GeneticAlgorithms.PopulationInitialization
     @test_throws ArgumentError RealUniformInitialization(0, -1, (0.0, 1.0))
     @test_throws ArgumentError RealUniformInitialization(3, 1, (2, 1))
     @test_throws ArgumentError RealUniformInitialization(3, 1, (1, 1))
+    @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0)])
+    @test_throws ArgumentError RealUniformInitialization(10, 2, (1.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0), (5.0, 5.0)])
 end
 
 @testset "AsymmetricPopulationInitialization" begin
