@@ -5,11 +5,19 @@ using ..Types
 struct RouletteWheelSelection <: SelectionMethod end
 
 """
-    RouletteWheelSelection(population::Population, fitness_scores::Vector{Float64}, rand_generator::Function=rand)
+    RouletteWheelSelection(population::Population, fitness_scores::Vector{Float64}, rand_generator::Function=rand) -> Tuple{T,T}
 
 Performs Roulette Wheel Selection on a population based on fitness scores, returning two selected individuals (parents).
 
-Selection is based on the cumulative probabilities of the fitness scores. 
+Selection is based on the cumulative probabilities of the fitness scores.
+
+# Arguments
+- `population::Population`: The population of chromosomes from which to select.
+- `fitness_scores::Vector{Float64}`: A vector of fitness scores corresponding to the population.
+- `rand_generator::Function=rand`: A function to generate random numbers, default is `rand`.
+
+# Return
+- `Tuple{T,T}`: A tuple containing two selected chromosomes (parents).
 """
 function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::Vector{Float64}, rand_generator::Function=rand)::Tuple{T,T} where {T<:Chromosome}
     if size(population.chromosomes, 1) != length(fitness_scores)
