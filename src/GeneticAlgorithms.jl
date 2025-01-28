@@ -37,6 +37,7 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
     mutation_method::M
     mutation_rate::Float64
     elitism::Bool
+    verbose::Bool
     save_best::Bool
     best_chromosomes::Vector{Chromosome}
     best_fitness::Vector{Float64}
@@ -48,10 +49,11 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
         crossover_method::C,
         mutation_method::M,
         elitism::Bool=true,
+        verbose::Bool=false,
         max_generations::Int=5,
         mutation_rate::Float64=0.1,
         save_best::Bool=false
-    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, save_best, Vector{Chromosome}(), Vector{Float64}())
+    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, verbose, save_best, Vector{Chromosome}(), Vector{Float64}())
 end
 
 """
@@ -73,8 +75,10 @@ function optimize(
         population = Population(population.chromosomes[sorted_population])
         fitness_scores = fitness_scores[sorted_population]
 
-        println("Generation $generation | Best Fitness: $(fitness_scores[1])")
-        println("Best Individual: $(population.chromosomes[1].genes)")
+        if genetic_algorithm.verbose
+            @info "Generation $generation | Best Fitness: $(fitness_scores[1])"
+            @info "Best Individual: $(population.chromosomes[1].genes)"
+        end
 
         # Elitism (Use the best individual for next generation)
         new_population = genetic_algorithm.elitism ? [population.chromosomes[1]] : []

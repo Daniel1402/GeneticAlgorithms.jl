@@ -60,7 +60,7 @@ Here is an overview of the project's main components:
    singlePointCrossover = SinglePointCrossover()
    geneMutation = RealGeneMutation(0.5, (-0.5, 0.5))
    uniform = RealUniformInitialization(1000, 2, (-1.0, 1.0))
-   ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, 100, 0.5, true)
+   ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, true, false, 100, 0.5, true)
    println(optimize(ga_rosenbrock))
    ```
 
@@ -68,7 +68,7 @@ Here is an overview of the project's main components:
 
    ```julia
    using GeneticAlgorithms.Utils
-   visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "~/result.png")
+   visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "result.png")
    ```
 
 ### A Short Introduction to Genetic Algorithms
