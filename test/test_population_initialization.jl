@@ -1,5 +1,4 @@
 using Test
-
 using GeneticAlgorithms.PopulationInitialization
 
 @testset "RealUniformInitialization" begin
@@ -9,7 +8,6 @@ using GeneticAlgorithms.PopulationInitialization
     @test all([length(population.chromosomes[i].genes) == 5 for i in 1:60])
     @test all([all([chromosome.genes[i] <= 1 for i in 1:length(chromosome.genes)]) for chromosome in population.chromosomes])
 
-    
     population_initialization = RealUniformInitialization(20, 50, (-14.3, 18.2))
     population = population_initialization()
     @test length(population.chromosomes) == 20
@@ -21,6 +19,26 @@ using GeneticAlgorithms.PopulationInitialization
     @test_throws ArgumentError RealUniformInitialization(0, -1, (0.0, 1.0))
     @test_throws ArgumentError RealUniformInitialization(3, 1, (2, 1))
     @test_throws ArgumentError RealUniformInitialization(3, 1, (1, 1))
+    @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0)])
+    @test_throws ArgumentError RealUniformInitialization(10, 2, (1.0, 1.0))
+    @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0), (5.0, 5.0)])
+
+    population_initialization = RealUniformInitialization(30, 4, (1, 10))
+    population = population_initialization()
+    @test length(population.chromosomes) == 30
+    @test all([length(population.chromosomes[i].genes) == 4 for i in 1:30])
+    @test all([all([chromosome.genes[i] >= 1 && chromosome.genes[i] <= 10 for i in 1:length(chromosome.genes)]) for chromosome in population.chromosomes])
+
+    population_initialization = RealUniformInitialization(15, 6, [(1, 5), (10, 20), (30, 40), (50, 60), (70, 80), (90, 100)])
+    population = population_initialization()
+    @test length(population.chromosomes) == 15
+    @test all([length(population.chromosomes[i].genes) == 6 for i in 1:15])
+    @test all([chromosome.genes[1] >= 1 && chromosome.genes[1] <= 5 &&
+               chromosome.genes[2] >= 10 && chromosome.genes[2] <= 20 &&
+               chromosome.genes[3] >= 30 && chromosome.genes[3] <= 40 &&
+               chromosome.genes[4] >= 50 && chromosome.genes[4] <= 60 &&
+               chromosome.genes[5] >= 70 && chromosome.genes[5] <= 80 &&
+               chromosome.genes[6] >= 90 && chromosome.genes[6] <= 100 for chromosome in population.chromosomes])
 end
 
 @testset "AsymmetricPopulationInitialization" begin
@@ -34,7 +52,6 @@ end
 
     @test_throws ArgumentError RealUniformInitialization(10, 3, [(0.0, 1.0), (-10.0, 10.0)])
     @test_throws ArgumentError RealUniformInitialization(10, 2, (1.0, 1.0))
-
 end
 
 @testset "SudokuInitialization" begin

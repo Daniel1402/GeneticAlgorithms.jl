@@ -68,6 +68,28 @@ function visualize_function_with_contours(
     return plt
 end
 
-export visualize_function_with_contours, visualize_rosenbrock_results
+
+
+"""
+    print_sudoku(chromosome::Chromosome)
+
+Prints the Sudoku genes of the given chromosome.
+
+# Arguments
+- `chromosome::Chromosome`: The chromosome to print.
+
+# Example
+```julia
+print_sudoku(Chromosome([Vector(1:9) for _ in 1:9]))
+```
+"""
+function print_sudoku(chromosome::Chromosome)
+    println("Sodoku:")
+    for gene in chromosome.genes
+        println(gene)
+    end
+end
+
+export visualize_function_with_contours, visualize_rosenbrock_results, print_sudoku
 
 end
