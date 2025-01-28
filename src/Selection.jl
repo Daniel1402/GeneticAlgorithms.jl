@@ -33,7 +33,7 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
     end
 
     # Helper function to select an index based on the fitness scores
-    function indexSelection(fitness_scores, rand_generator)
+    function indexSelection(fitness_scores::Vector{Float64}, rand_generator::Function)::Int
         # Calculate the cumulative probabilities
         cum_probs = cumsum(fitness_scores ./ sum(fitness_scores))
 
