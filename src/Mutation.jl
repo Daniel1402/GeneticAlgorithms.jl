@@ -1,7 +1,7 @@
 module Mutation
 
-using Distributions
-using Random
+using Distributions: Uniform
+using Random: shuffle
 
 using ..Types
 
@@ -41,9 +41,6 @@ end
 
 
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Integer}
-    if !all(c.mutation_interval[i] isa Integer for i in 1:2)
-        throw(ArgumentError("Mutation interval must be of type Integer"))
-    end
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))

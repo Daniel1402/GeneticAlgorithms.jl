@@ -53,7 +53,7 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
         max_generations::Int=5,
         mutation_rate::Float64=0.1,
         save_best::Bool=false
-    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, verbose, save_best, [], [])
+    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, verbose, save_best, Vector{Chromosome}(), Vector{Float64}())
 end
 
 """
@@ -64,7 +64,7 @@ Runs the genetic algorithm with the specified parameters and returns the best in
 """
 function optimize(
     genetic_algorithm::GeneticAlgorithm
-)
+)::Chromosome
     population::Population = initialize_population(genetic_algorithm.initialization_strategy)
 
     fitness_scores = [evaluate_fitness(individual, genetic_algorithm.fitness_function) for individual in population.chromosomes]

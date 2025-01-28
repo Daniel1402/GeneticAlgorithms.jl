@@ -1,5 +1,5 @@
 using Test
-using Plots
+using Plots: savefig
 
 using GeneticAlgorithms.Utils
 using GeneticAlgorithms.Fitness
@@ -18,7 +18,15 @@ using GeneticAlgorithms.Fitness
     savefig(plt, "rosenbrock.png")
 
     path = [Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1.0, 1.0])]
-    visualize_rosenbrock_results(path, "rosenbrock_path.png")
+    visualize_rosenbrock_results(path, "rosenbrock_path.png") 
+end
 
-
+@testset "PrintSudoku Tests" begin
+    # Since there was no feasible way to test the output of the function, we just test if it throws an error
+    try
+        chromosome = Chromosome([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        print_sudoku(chromosome)
+    catch e
+        @test false
+    end
 end

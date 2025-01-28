@@ -1,7 +1,7 @@
 module PopulationInitialization
 
-using Distributions
-using Random
+using Distributions: Uniform
+using Random: shuffle
 
 using ..Types
 
