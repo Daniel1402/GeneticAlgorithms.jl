@@ -1,6 +1,6 @@
 module Selection
 
-using ..Types
+using ..Types: Population, Chromosome, SelectionMethod
 
 struct RouletteWheelSelection <: SelectionMethod end
 
