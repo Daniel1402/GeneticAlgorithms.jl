@@ -1,8 +1,8 @@
 module Utils
 
-using Plots
-using ..Fitness
-using ..Types
+using Plots: contour, plot!, scatter!, savefig, gr
+using ..Fitness: rosenbrock_fitness
+using ..Types: Chromosome
 
 gr() # set gr backend
 
@@ -22,7 +22,7 @@ visualize_results([Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1
 
 """
 function visualize_rosenbrock_results(best_chromosomes::Vector{T}, save_path::String="result.png") where {T<:Chromosome}
-    f(x, y) = Fitness.rosenbrock_fitness(Chromosome([x, y]))
+    f(x, y) = rosenbrock_fitness(Chromosome([x, y]))
 
     # Automatically center result
     x_center, y_center = best_chromosomes[end]
@@ -79,9 +79,6 @@ Prints the Sudoku genes of the given chromosome.
 - `chromosome::Chromosome`: The chromosome to print.
 
 # Example
-```julia
-print_sudoku(Chromosome([Vector(1:9) for _ in 1:9]))
-```
 """
 function print_sudoku(chromosome::Chromosome)
     println("Sodoku:")
@@ -89,6 +86,7 @@ function print_sudoku(chromosome::Chromosome)
         println(gene)
     end
 end
+
 
 export visualize_function_with_contours, visualize_rosenbrock_results, print_sudoku
 

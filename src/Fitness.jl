@@ -1,6 +1,6 @@
 module Fitness
 
-using ..Types
+using ..Types: Chromosome
 
 """
     rosenbrock_fitness(values::Chromosome{Float64})::Float64

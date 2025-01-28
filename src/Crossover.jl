@@ -1,7 +1,6 @@
 module Crossover
 
-using ..Types
-
+using ..Types: Chromosome, CrossoverMethod
 
 struct SinglePointCrossover <: CrossoverMethod end
 

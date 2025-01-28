@@ -1,5 +1,5 @@
 using Test
-using Plots
+using Plots: savefig
 
 using GeneticAlgorithms.Utils
 using GeneticAlgorithms.Fitness
