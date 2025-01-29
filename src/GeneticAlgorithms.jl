@@ -13,20 +13,48 @@ using .Utils
 using Plots
 
 """
-    GeneticAlgorithm
+    GeneticAlgorithm(
+        initialization_strategy::P,
+        fitness_function::Function,
+        selection_strategy::S,
+        crossover_method::C,
+        mutation_method::M;
+        elitism::Bool=true,
+        verbose::Bool=false,
+        max_generations::Int=5,
+        mutation_rate::Float64=0.1,
+        save_best::Bool=false,
+    ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
 
-Defines a genetic algorithm with the specified parameters. 
-The population is initialized with the `initialization_strategy` and the fitness 
-of each chromosome is calculated with the `fitness_function`. The algorithm runs
-for `max_generations` generations. The `selection_strategy` is used to select
-parents for the crossover. The `crossover_method` is used to generate offspring
-from the selected parents. The `mutation_method` is used to mutate the offspring.
-The `mutation_rate` is the probability of mutation. If `elitism` is true, the best
-individual from the previous generation is carried over to the next generation.
-If `save_best` is true, the best chromosomes and their fitness scores are saved
-in the `best_chromosomes` and `best_fitness` fields respectively for e.G. visualization.
-Note that the `best_chromosomes` and `best_fitness` fields store `max_generations + 1`
-values, including the initial population.
+Defines a genetic algorithm with the specified parameters for selection, mutation, crossover and fitness evaluation.
+
+# Arguments
+- `initialization_strategy::P`: Strategy to initialize the population.
+- `fitness_function::Function`: Function to calculate the fitness of each chromosome.
+- `selection_strategy::S`: Strategy to select parents for crossover.
+- `crossover_method::C`: Method to generate offspring from selected parents.
+- `mutation_method::M`: Method to mutate the offspring.
+- `elitism::Bool=true`: If true, the best individual from the previous generation is carried over to the next generation.
+- `verbose::Bool=false`: If true, additional information is printed during the execution.
+- `max_generations::Int=5`: Number of generations the algorithm runs for.
+- `mutation_rate::Float64=0.1`: Probability of mutation for each offspring in a generation.
+- `save_best::Bool=false`: If true, the best chromosomes and their fitness scores are saved for visualization.
+
+# Fields
+- `initialization_strategy::P`: Strategy to initialize the population.
+- `fitness_function::Function`: Function to calculate the fitness of each chromosome.
+- `max_generations::Int`: Number of generations the algorithm runs for.
+- `selection_strategy::S`: Strategy to select parents for crossover.
+- `crossover_method::C`: Method to generate offspring from selected parents.
+- `mutation_method::M`: Method to mutate the offspring.
+- `mutation_rate::Float64`: Probability of mutation.
+- `elitism::Bool`: If true, the best individual from the previous generation is carried over to the next generation.
+- `verbose::Bool`: If true, additional information is printed during the execution.
+- `save_best::Bool`: If true, the best chromosomes and their fitness scores are saved for visualization.
+- `best_chromosomes::Vector{Chromosome}`: Stores the best chromosomes for each generation.
+- `best_fitness::Vector{Float64}`: Stores the fitness scores of the best chromosomes for each generation.
+
+Note that the `best_chromosomes` and `best_fitness` fields store `max_generations + 1` values, including the initial population.
 """
 struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
     initialization_strategy::P
@@ -47,12 +75,12 @@ struct GeneticAlgorithm{P<:PopulationInitializationMethod,S<:SelectionMethod,C<:
         fitness_function::Function,
         selection_strategy::S,
         crossover_method::C,
-        mutation_method::M,
+        mutation_method::M;
         elitism::Bool=true,
         verbose::Bool=false,
         max_generations::Int=5,
         mutation_rate::Float64=0.1,
-        save_best::Bool=false
+        save_best::Bool=false,
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod} = new{P,S,C,M}(initialization_strategy, fitness_function, max_generations, selection_strategy, crossover_method, mutation_method, mutation_rate, elitism, verbose, save_best, Vector{Chromosome}(), Vector{Float64}())
 end
 
