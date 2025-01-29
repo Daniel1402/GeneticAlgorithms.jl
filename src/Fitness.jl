@@ -1,6 +1,3 @@
-module Fitness
-
-using ..Types: Chromosome
 
 """
     rosenbrock_fitness(values::Chromosome{Float64})::Float64
@@ -47,8 +44,4 @@ function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
         end
     end
     return fitness
-end
-
-export rosenbrock_fitness, sudoku_fitness
-
 end

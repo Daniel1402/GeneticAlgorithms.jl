@@ -1,7 +1,3 @@
-using Test
-using GeneticAlgorithms.Mutation
-using GeneticAlgorithms.Types
-
 
 @testset "RealGeneMutation" begin
     mutation = RealGeneMutation(0.1, (-0.5, 0.5))

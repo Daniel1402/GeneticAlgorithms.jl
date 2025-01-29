@@ -1,12 +1,4 @@
-using Test
-using Logging
-
-using GeneticAlgorithms
-using GeneticAlgorithms.Selection
-using GeneticAlgorithms.Crossover
-using GeneticAlgorithms.Mutation
-using GeneticAlgorithms.Fitness
-using GeneticAlgorithms.PopulationInitialization
+using Logging: with_logger 
 
 @testset "GeneticAlgorithms.jl - rosenbrock" begin
     uniform = RealUniformInitialization(10, 5, (-0.5, 0.5))
@@ -65,5 +57,4 @@ end
         optimize(ga_rosenbrock)
     end
     @test length(test_logger.logs) > 0
-
 end

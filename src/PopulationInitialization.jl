@@ -1,10 +1,3 @@
-module PopulationInitialization
-
-using Distributions: Uniform
-using Random: shuffle
-
-using ..Types
-
 """
     RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T,T})
 
@@ -102,8 +95,4 @@ function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
 
     return Population([new_chromosome() for _ in 1:c.population_size])
     
-end
-
-export RealUniformInitialization, SudokuInitialization
-
 end

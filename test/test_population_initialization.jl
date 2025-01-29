@@ -1,5 +1,3 @@
-using Test
-using GeneticAlgorithms.PopulationInitialization
 
 @testset "RealUniformInitialization" begin
     population_initialization = RealUniformInitialization(60, 5, (0.0, 1.0))

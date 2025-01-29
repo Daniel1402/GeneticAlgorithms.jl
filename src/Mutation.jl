@@ -1,11 +1,3 @@
-module Mutation
-
-using Distributions: Uniform
-using Random: shuffle
-
-using ..Types
-
-
 """
     RealGeneMutation(mutation_rate::Float64, mutation_interval::Tuple{T,T})
 
@@ -93,8 +85,4 @@ function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{
     end
    
     return new_chromosome
-end
-
-
-export RealGeneMutation, SudokuMutation
 end

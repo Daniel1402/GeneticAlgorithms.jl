@@ -1,8 +1,4 @@
-using Test
 using Plots: savefig
-
-using GeneticAlgorithms.Utils
-using GeneticAlgorithms.Fitness
 
 @testset "Visualization Tests" begin
     # Sample test

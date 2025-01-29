@@ -1,8 +1,6 @@
 using Test
 
-#include("../src/GeneticAlgorithms.jl")
 using GeneticAlgorithms
-using GeneticAlgorithms.Types
 
 include("test_crossover.jl")
 include("test_population_initialization.jl")

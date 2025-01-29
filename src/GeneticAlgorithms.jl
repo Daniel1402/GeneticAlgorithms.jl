@@ -1,16 +1,32 @@
 module GeneticAlgorithms
 
-include("Types.jl")
-include("PopulationInitialization.jl")
-include("Selection.jl")
-include("Crossover.jl")
-include("Mutation.jl")
-include("Fitness.jl")
-include("Utils.jl")
+using Distributions: Uniform
+using Random: shuffle
+using Plots: contour, plot!, scatter!, savefig, gr
 
-using .Types
-using .Utils
-using Plots
+
+include("Types.jl")
+export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
+
+include("PopulationInitialization.jl")
+export RealUniformInitialization, SudokuInitialization
+
+include("Selection.jl")
+export RouletteWheelSelection
+
+include("Crossover.jl")
+export SinglePointCrossover
+
+include("Mutation.jl")
+export RealGeneMutation, SudokuMutation
+
+include("Fitness.jl")
+export rosenbrock_fitness, sudoku_fitness
+
+include("Utils.jl")
+export visualize_function_with_contours, visualize_rosenbrock_results, print_sudoku
+
+
 
 """
     GeneticAlgorithm(
@@ -172,5 +188,5 @@ function evaluate_fitness(individual::I, fitness_function::Function) where {I<:C
 end
 
 
-export optimize, Crossover, PopulationInitialization, Selection, Mutation, GeneticAlgorithm
+export optimize, GeneticAlgorithm
 end

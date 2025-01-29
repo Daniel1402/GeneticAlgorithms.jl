@@ -1,6 +1,3 @@
-using Test
-
-using GeneticAlgorithms.Fitness
 
 @testset "Rosenbrock Fitness Tests" begin
 

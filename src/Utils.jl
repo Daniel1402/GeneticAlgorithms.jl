@@ -1,9 +1,3 @@
-module Utils
-
-using Plots: contour, plot!, scatter!, savefig, gr
-using ..Fitness: rosenbrock_fitness
-using ..Types: Chromosome
-
 gr() # set gr backend
 
 """
@@ -85,9 +79,4 @@ function print_sudoku(chromosome::Chromosome)
     for gene in chromosome.genes
         println(gene)
     end
-end
-
-
-export visualize_function_with_contours, visualize_rosenbrock_results, print_sudoku
-
 end

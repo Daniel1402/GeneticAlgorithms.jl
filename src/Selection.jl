@@ -1,6 +1,3 @@
-module Selection
-
-using ..Types: Population, Chromosome, SelectionMethod
 
 struct RouletteWheelSelection <: SelectionMethod end
 
@@ -61,6 +58,3 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
     return population.chromosomes[p1_index], population.chromosomes[p2_index]
 end
 
-
-export RouletteWheelSelection
-end

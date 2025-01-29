@@ -1,7 +1,3 @@
-using Test
-using GeneticAlgorithms.Selection
-using GeneticAlgorithms.Types
-
 population = Population([Chromosome([1, 2, 3]), Chromosome([4, 5, 6]), Chromosome([7, 8, 9]), Chromosome([10, 11, 12])])
 fitness_scores = [10.0, 20.0, 30.0, 40.0]
 
