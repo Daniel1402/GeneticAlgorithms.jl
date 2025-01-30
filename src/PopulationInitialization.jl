@@ -9,9 +9,13 @@ The type is determined by the `interval`.
 struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     population_size::Int64
     chromosome_size::Int64
-    intervals::Vector{Tuple{T, T}}
+    intervals::Vector{Tuple{T,T}}
 
-    function validate_inputs(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
+    function validate_inputs(
+        population_size::Int64,
+        chromosome_size::Int64,
+        intervals::Vector{Tuple{T,T}},
+    ) where {T<:Real}
         if population_size <= 0
             throw(ArgumentError("Population size must be greater than zero."))
         end
@@ -23,32 +27,56 @@ struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
         end
         for interval in intervals
             if interval[1] >= interval[2]
-                throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
+                throw(
+                    ArgumentError(
+                        "Upper bound must be greater than lower bound of the interval.",
+                    ),
+                )
             end
         end
     end
 
-    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T, T}) where {T<:Real}
+    function RealUniformInitialization(
+        population_size::Int64,
+        chromosome_size::Int64,
+        interval::Tuple{T,T},
+    ) where {T<:Real}
         if interval[1] >= interval[2]
-            throw(ArgumentError("Upper bound must be greater than lower bound of the interval."))
+            throw(
+                ArgumentError(
+                    "Upper bound must be greater than lower bound of the interval.",
+                ),
+            )
         end
         intervals = fill(interval, chromosome_size)
         validate_inputs(population_size, chromosome_size, intervals)
         new{T}(population_size, chromosome_size, intervals)
     end
 
-    function RealUniformInitialization(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T, T}}) where {T<:Real}
+    function RealUniformInitialization(
+        population_size::Int64,
+        chromosome_size::Int64,
+        intervals::Vector{Tuple{T,T}},
+    ) where {T<:Real}
         validate_inputs(population_size, chromosome_size, intervals)
         new{T}(population_size, chromosome_size, intervals)
     end
 end
 
 function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Float64}
-    return Population([Chromosome([rand(Uniform(c.intervals[i][1], c.intervals[i][2])) for i in 1:c.chromosome_size]) for _ in 1:c.population_size])
+    return Population([
+        Chromosome([
+            rand(Uniform(c.intervals[i][1], c.intervals[i][2])) for i = 1:c.chromosome_size
+        ]) for _ = 1:c.population_size
+    ])
 end
 
 function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Integer}
-    return Population([Chromosome([rand(c.intervals[i][1]:c.intervals[i][2]) for i in 1:c.chromosome_size]) for _ in 1:c.population_size])
+    return Population([
+        Chromosome([
+            rand(c.intervals[i][1]:c.intervals[i][2]) for i = 1:c.chromosome_size
+        ]) for _ = 1:c.population_size
+    ])
 end
 
 """
@@ -63,7 +91,7 @@ The initialization ensure that each column contains the values `1-9` exactly onc
 struct SudokuInitialization <: PopulationInitializationMethod
     population_size::Int64
     initial::Vector{Vector{Int64}} #9x9 initial grid
-    
+
     function SudokuInitialization(population_size::Int64, initial::Vector{Vector{Int64}})
         if population_size <= 0
             throw(ArgumentError("Population size must be greater zero."))
@@ -93,6 +121,6 @@ function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
         return Chromosome(chromosome)
     end
 
-    return Population([new_chromosome() for _ in 1:c.population_size])
-    
+    return Population([new_chromosome() for _ = 1:c.population_size])
+
 end

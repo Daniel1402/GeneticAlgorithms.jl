@@ -5,7 +5,8 @@ using Random: shuffle
 
 
 include("Types.jl")
-export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
+export PopulationInitializationMethod,
+    SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
 
 include("PopulationInitialization.jl")
 export RealUniformInitialization, SudokuInitialization
