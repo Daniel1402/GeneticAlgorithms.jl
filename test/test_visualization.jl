@@ -1,7 +1,7 @@
 using Plots: savefig
 using GeneticAlgorithms.Visualization
 
-@testset "Visualization Tests" begin
+@testset "plots" begin
     # Sample test
     f(x::Float64, y::Float64) = sin(x) * cos(y)
     path = [(-π / 2, 0.0), (π / 2, 0.0)]
@@ -42,8 +42,8 @@ using GeneticAlgorithms.Visualization
 end
 
 
-using Suppressor
-@testset "PrintSudoku Tests" begin
+using Suppressor: @capture_out
+@testset "print_sudoku" begin
     # Since there was no feasible way to test the output of the function, we just test if it throws an error
     sudoku = [
         [5, 3, 0, 0, 7, 0, 0, 0, 0],

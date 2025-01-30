@@ -1,4 +1,6 @@
-@testset "Crossover.jl" begin
+
+@testset "SinglePointCrossover" begin
+
     chrom1_values = [1, 2, 3, 4, 5]
     chrom2_values = [6, 7, 8, 9, 10]
 

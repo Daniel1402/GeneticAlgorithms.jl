@@ -1,12 +1,13 @@
-population = Population([
+@testset "RouletteWheelSelection" begin
+
+    population = Population([
     Chromosome([1, 2, 3]),
     Chromosome([4, 5, 6]),
     Chromosome([7, 8, 9]),
     Chromosome([10, 11, 12]),
-])
-fitness_scores = [10.0, 20.0, 30.0, 40.0]
+    ])
+    fitness_scores = [10.0, 20.0, 30.0, 40.0]
 
-@testset "Roulette Wheel Selection" begin
     rouletteWheelSelection = RouletteWheelSelection()
     # Test: ArgumentErrors
     @test_throws ArgumentError rouletteWheelSelection(population, [10.0, 20.0]) # Different lengths

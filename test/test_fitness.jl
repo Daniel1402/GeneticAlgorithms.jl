@@ -1,5 +1,5 @@
 
-@testset "Rosenbrock Fitness Tests" begin
+@testset "rosenbrock_fitness" begin
 
     @test rosenbrock_fitness(Chromosome([1.0, 1.0])) ≈ 100
     @test rosenbrock_fitness(Chromosome([0.0, 0.0])) ≈ 50
