@@ -14,6 +14,15 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Getting Started" => "example.md",
+        "Genetic Algorithm" => "genetic_algorithm.md",
+        "Types" => "types.md",
+        "Population Initialization" => "population_initialization.md",
+        "Selection" => "selection.md",
+        "Crossover" => "crossover.md",
+        "Mutation" => "mutation.md",
+        "Fitness" => "fitness.md",
+        "Visualization" => "visualization.md",
     ],
 )
 
