@@ -1,4 +1,5 @@
 using Plots: savefig
+using GeneticAlgorithms.Visualization
 
 @testset "Visualization Tests" begin
     # Sample test

@@ -1,3 +1,8 @@
+module Visualization
+
+using Plots: contour, plot!, scatter!, savefig, gr
+using GeneticAlgorithms: Chromosome, rosenbrock_fitness
+
 gr() # set gr backend
 
 """
@@ -87,4 +92,7 @@ function print_sudoku(chromosome::Chromosome)
         end
         println()
     end
+end
+
+export visualize_rosenbrock_results, visualize_function_with_contours, print_sudoku
 end
