@@ -10,6 +10,3 @@ include("test_fitness.jl")
 include("test_genetic_algorithms.jl")
 include("test_utils.jl")
 
-# @testset "GeneticAlgorithms.jl" begin
-#     # Write your tests here.
-# end

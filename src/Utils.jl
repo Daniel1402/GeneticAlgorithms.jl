@@ -75,8 +75,16 @@ Prints the Sudoku genes of the given chromosome.
 # Example
 """
 function print_sudoku(chromosome::Chromosome)
-    println("Sodoku:")
-    for gene in chromosome.genes
-        println(gene)
+    for (i, gene) in enumerate(chromosome.genes)
+        if (i-1) % 3 == 0 && i != 1
+            println("----------+-----------+----------")
+        end
+        for (j, cell) in enumerate(gene)
+            if (j-1) % 3 == 0 && j != 1
+                print(" | ")
+            end
+            print(" ", cell, " ")
+        end
+        println()
     end
 end
