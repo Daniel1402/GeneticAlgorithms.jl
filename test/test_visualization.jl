@@ -13,6 +13,8 @@ using GeneticAlgorithms.Visualization
     )
     savefig(plt, "sin_times_cos.png")
 
+    @test isfile("sin_times_cos.png")
+
     # Rosenbrock
     g(x::Float64, y::Float64) = rosenbrock_fitness(Chromosome([x, y]))
     path = [(1.0, 1.0)]
@@ -24,8 +26,19 @@ using GeneticAlgorithms.Visualization
     )
     savefig(plt, "rosenbrock.png")
 
+    @test isfile("rosenbrock.png")
+
+    # Rosenbrock optimization visualization
     path = [Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1.0, 1.0])]
     visualize_rosenbrock_results(path, "rosenbrock_path.png")
+
+    @test isfile("rosenbrock_path.png")
+
+    # Clean up files
+    rm("sin_times_cos.png", force = true)
+    rm("rosenbrock.png", force = true)
+    rm("rosenbrock_path.png", force = true)
+
 end
 
 

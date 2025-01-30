@@ -8,17 +8,14 @@ gr() # set gr backend
 """
     visualize_rosenbrock_results(best_chromosomes::Vector{Chromosome}, save_path::String="result.png")
 
-Generates a visualization of the optimization process for the rosenbrock fitness function with given best chromosomes.
-
-# Arguments
-- `best_chromosomes`: A sequence of optimization results (chromosomes) for visualizing the optimization path.
+Generates a visualization of the optimization process for the Rosenbrock fitness function with given `best_chromosomes`.
+The visualization is saved to the specified `save_path`.
 
 # Example
 ```
 julia
 visualize_results([Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1.0, 1.0])], "rosenbrock_path.png")
 ```
-
 """
 function visualize_rosenbrock_results(
     best_chromosomes::Vector{T},
