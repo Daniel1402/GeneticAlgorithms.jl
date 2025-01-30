@@ -117,7 +117,6 @@ function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
 
         if genetic_algorithm.verbose
             @info "Generation $generation | Best Fitness: $(fitness_scores[1])"
-            @info "Best Individual: $(population.chromosomes[1].genes)"
         end
 
         # Elitism (Use the best individual for next generation)
