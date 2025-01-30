@@ -31,9 +31,9 @@ abstract type MutationMethod end
 
 
 """
-    Chromosome{T}
+    Chromosome(genes::Vector{T})
 
-A chromosome consists of a vector of genes of type `T`.
+A chromosome consists of a vector of `genes` of type `T`.
 """
 struct Chromosome{T}
     genes::Vector{T}
@@ -45,9 +45,9 @@ Base.iterate(c::Chromosome, state) = iterate(c.genes, state)
 
 
 """
-    Population{T}
+    Population(chromosomes::Vector{T})
 
-A population consists of a vector of chromosomes of type `T`.
+A population consists of a vector of `chromosomes` of type `T`.
 """
 struct Population{T<:Chromosome}
     chromosomes::Vector{T}
