@@ -4,28 +4,28 @@ module Types
 """
     PopulationInitializationMethod
 
-    Abstract type for population initialization methods.
+Abstract type for population initialization methods.
 """
 abstract type PopulationInitializationMethod end
 
 """
     SelectionMethod
 
-    Abstract type for selection methods.
+Abstract type for selection methods.
 """
 abstract type SelectionMethod end
 
 """
     CrossoverMethod
 
-    Abstract type for crossover methods.
+Abstract type for crossover methods.
 """
 abstract type CrossoverMethod end
 
 """
     MutationMethod
 
-    Abstract type for mutation methods.
+Abstract type for mutation methods.
 """
 abstract type MutationMethod end
 
@@ -33,7 +33,7 @@ abstract type MutationMethod end
 """
     Chromosome{T}
 
-    A chromosome consists of a vector of genes of type `T`.
+A chromosome consists of a vector of genes of type `T`.
 """
 struct Chromosome{T}
     genes::Vector{T}
@@ -47,7 +47,7 @@ Base.iterate(c::Chromosome, state) = iterate(c.genes, state)
 """
     Population{T}
 
-    A population consists of a vector of chromosomes of type `T`.
+A population consists of a vector of chromosomes of type `T`.
 """
 struct Population{T<:Chromosome}
     chromosomes::Vector{T}
