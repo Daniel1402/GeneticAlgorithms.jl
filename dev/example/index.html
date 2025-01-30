@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Getting Started · GeneticAlgorithms.jl</title><meta name="title" content="Getting Started · GeneticAlgorithms.jl"/><meta property="og:title" content="Getting Started · GeneticAlgorithms.jl"/><meta property="twitter:title" content="Getting Started · GeneticAlgorithms.jl"/><meta name="description" content="Documentation for GeneticAlgorithms.jl."/><meta property="og:description" content="Documentation for GeneticAlgorithms.jl."/><meta property="twitter:description" content="Documentation for GeneticAlgorithms.jl."/><meta property="og:url" content="https://Daniel1402.github.io/GeneticAlgorithms.jl/example/"/><meta property="twitter:url" content="https://Daniel1402.github.io/GeneticAlgorithms.jl/example/"/><link rel="canonical" href="https://Daniel1402.github.io/GeneticAlgorithms.jl/example/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">GeneticAlgorithms.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Getting Started</a></li><li><a class="tocitem" href="../genetic_algorithm/">Genetic Algorithm</a></li><li><a class="tocitem" href="../types/">Types</a></li><li><a class="tocitem" href="../population_initialization/">Population Initialization</a></li><li><a class="tocitem" href="../selection/">Selection</a></li><li><a class="tocitem" href="../crossover/">Crossover</a></li><li><a class="tocitem" href="../mutation/">Mutation</a></li><li><a class="tocitem" href="../fitness/">Fitness</a></li><li><a class="tocitem" href="../visualization/">Visualization</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Getting Started</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Getting Started</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/Daniel1402/GeneticAlgorithms.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/Daniel1402/GeneticAlgorithms.jl/blob/main/docs/src/example.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h3 id="Simple-Example-usage-for-solvig-the-Rosenbrock-Problem"><a class="docs-heading-anchor" href="#Simple-Example-usage-for-solvig-the-Rosenbrock-Problem">Simple Example usage for solvig the Rosenbrock Problem</a><a id="Simple-Example-usage-for-solvig-the-Rosenbrock-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Simple-Example-usage-for-solvig-the-Rosenbrock-Problem" title="Permalink"></a></h3><pre><code class="language-julia hljs">using GeneticAlgorithms
+using GeneticAlgorithms.Selection
+using GeneticAlgorithms.Crossover
+using GeneticAlgorithms.Mutation
+using GeneticAlgorithms.Fitness
+using GeneticAlgorithms.PopulationInitialization
+
+rouletteWheelSelection = RouletteWheelSelection()
+singlePointCrossover = SinglePointCrossover()
+geneMutation = RealGeneMutation(0.5, (-0.5, 0.5))
+uniform = RealUniformInitialization(1000, 2, (-1.0, 1.0))
+ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=100, mutation_rate=0.5, save_best=true)
+println(optimize(ga_rosenbrock))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">GeneticAlgorithms.Types.Chromosome{Float64}([1.0102689568263217, 1.0208293876377583])</code></pre><h3 id="Visualizing-Results-Rosenbrock-Problem"><a class="docs-heading-anchor" href="#Visualizing-Results-Rosenbrock-Problem">Visualizing Results - Rosenbrock Problem</a><a id="Visualizing-Results-Rosenbrock-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Visualizing-Results-Rosenbrock-Problem" title="Permalink"></a></h3><pre><code class="language-julia hljs">## Preparation
+using GeneticAlgorithms
+using GeneticAlgorithms.Selection
+using GeneticAlgorithms.Crossover
+using GeneticAlgorithms.Mutation
+using GeneticAlgorithms.Fitness
+using GeneticAlgorithms.PopulationInitialization
+
+rouletteWheelSelection = RouletteWheelSelection()
+singlePointCrossover = SinglePointCrossover()
+geneMutation = RealGeneMutation(0.5, (-0.5, 0.5))
+uniform = RealUniformInitialization(10, 2, (-1.0, 1.0))
+ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=100, mutation_rate=0.5, save_best=true)
+optimize(ga_rosenbrock)
+
+## Visualisation
+using GeneticAlgorithms.Utils
+visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, &quot;rbplot.svg&quot;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;/home/runner/work/GeneticAlgorithms.jl/GeneticAlgorithms.jl/docs/build/rbplot.svg&quot;</code></pre><p><img src="../rbplot.svg" alt/></p><h3 id="Sudoku-Solver"><a class="docs-heading-anchor" href="#Sudoku-Solver">Sudoku Solver</a><a id="Sudoku-Solver-1"></a><a class="docs-heading-anchor-permalink" href="#Sudoku-Solver" title="Permalink"></a></h3><pre><code class="language-julia hljs">using GeneticAlgorithms
+using GeneticAlgorithms.Selection
+using GeneticAlgorithms.Crossover
+using GeneticAlgorithms.Mutation
+using GeneticAlgorithms.Fitness
+using GeneticAlgorithms.PopulationInitialization
+using GeneticAlgorithms.Utils
+using GeneticAlgorithms.Types
+
+initial = [
+    [5, 3, 0, 0, 7, 0, 0, 0, 0],
+    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+]
+println(&quot;Initial Sudoku State:&quot;)
+print_sudoku(Chromosome(initial))
+initStrategy = SudokuInitialization(20, initial)
+rouletteWheelSelection = RouletteWheelSelection()
+singlePointCrossover = SinglePointCrossover()
+geneMutation = SudokuMutation(0.1, initial)
+fitness_fn = (genes) -&gt; sum(abs.(genes))
+ga = GeneticAlgorithm(initStrategy, sudoku_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=1000, mutation_rate=0.4, save_best=true)
+chromosome = optimize(ga)
+println(&quot;Optimized Result:&quot;)
+print_sudoku(chromosome)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Initial Sudoku State:
+Sodoku:
+[5, 3, 0, 0, 7, 0, 0, 0, 0]
+[6, 0, 0, 1, 9, 5, 0, 0, 0]
+[0, 9, 8, 0, 0, 0, 0, 6, 0]
+[8, 0, 0, 0, 6, 0, 0, 0, 3]
+[4, 0, 0, 8, 0, 3, 0, 0, 1]
+[7, 0, 0, 0, 2, 0, 0, 0, 6]
+[0, 6, 0, 0, 0, 0, 2, 8, 0]
+[0, 0, 0, 4, 1, 9, 0, 0, 5]
+[0, 0, 0, 0, 8, 0, 0, 7, 9]
+Optimized Result:
+Sodoku:
+[5, 3, 2, 6, 7, 8, 9, 1, 4]
+[6, 7, 4, 1, 9, 5, 3, 2, 8]
+[1, 9, 8, 5, 4, 3, 7, 6, 2]
+[8, 5, 1, 9, 6, 2, 7, 4, 3]
+[4, 9, 6, 8, 7, 3, 5, 2, 1]
+[7, 8, 3, 1, 2, 4, 9, 5, 6]
+[4, 6, 9, 3, 5, 7, 2, 8, 1]
+[2, 8, 7, 4, 1, 9, 6, 3, 5]
+[3, 1, 5, 2, 8, 6, 4, 7, 9]</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../genetic_algorithm/">Genetic Algorithm »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Thursday 30 January 2025 20:10">Thursday 30 January 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
