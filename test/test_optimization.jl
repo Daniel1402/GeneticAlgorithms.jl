@@ -15,12 +15,13 @@ using Logging: with_logger
         rouletteWheelSelection,
         singlePointCrossover,
         geneMutation,
+        save_best = true,
     )
 
-    optimize(ga)
+    optimize(ga_sum)
     fitness_pre = ga_sum.best_fitness[1]
     
-    for (i, fitness_score) in enumerate(i, ga_sum.best_fitness)
+    for (i, fitness_score) in enumerate(ga_sum.best_fitness)
         @test fitness_score >= fitness_pre
         fitness_pre = fitness_score
         @test fitness_score ≈ sum_abs(ga_sum.best_chromosomes[i])
@@ -46,7 +47,7 @@ using Logging: with_logger
     
     fitness_pre = ga_rosenbrock.best_fitness[1]
     
-    for (i, fitness_score) in enumerate(i, ga_rosenbrock.best_fitness)
+    for (i, fitness_score) in enumerate(ga_rosenbrock.best_fitness)
         @test fitness_score >= fitness_pre
         fitness_pre = fitness_score
         @test fitness_score ≈ rosenbrock_fitness(ga_rosenbrock.best_chromosomes[i])
@@ -86,6 +87,8 @@ end
         save_best = true,
     )
 
+    optimize(ga_sudoku)
+
     fitness_pre = ga_sudoku.best_fitness[1]
     for (i, fitness_score) in enumerate(ga_sudoku.best_fitness)
         @test fitness_score >= fitness_pre
@@ -93,11 +96,11 @@ end
         @test fitness_score ≈ sudoku_fitness(ga_sudoku.best_chromosomes[i])
     end
 
-    @test length(ga_sudoku.best_chromosomes) == 101 # 100 generations + initial population
-    @test length(ga_sudoku.best_fitness) == 101
+    @test length(ga_sudoku.best_chromosomes) == 1001 # 1000 generations + initial population
+    @test length(ga_sudoku.best_fitness) == 1001
 end
 
-@testset "test verbose outputs anything" begin
+@testset "verbose outputs anything" begin
     uniform = RealUniformInitialization(10, 5, (-0.5, 0.5))
     rouletteWheelSelection = RouletteWheelSelection()
     singlePointCrossover = SinglePointCrossover()
