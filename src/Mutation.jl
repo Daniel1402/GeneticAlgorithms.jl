@@ -1,11 +1,3 @@
-module Mutation
-
-using Distributions: Uniform
-using Random: shuffle
-
-using ..Types
-
-
 """
     RealGeneMutation(mutation_rate::Float64, mutation_interval::Tuple{T,T})
 
@@ -17,7 +9,10 @@ struct RealGeneMutation{T<:Real} <: MutationMethod
     mutation_rate::Float64
     mutation_interval::Tuple{T,T}
 
-    function RealGeneMutation(mutation_rate::Float64, mutation_interval::Tuple{T,T}) where {T<:Real}
+    function RealGeneMutation(
+        mutation_rate::Float64,
+        mutation_interval::Tuple{T,T},
+    ) where {T<:Real}
         if mutation_rate < 0 || mutation_rate > 1
             throw(ArgumentError("Mutation rate must be between 0 and 1"))
         end
@@ -33,16 +28,24 @@ struct RealGeneMutation{T<:Real} <: MutationMethod
 end
 
 
-function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Float64}
+function (c::RealGeneMutation{T})(
+    chromosome::Chromosome{T},
+)::Chromosome{T} where {T<:Float64}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    random_additions = rand(Uniform(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
+    random_additions = rand(
+        Uniform(c.mutation_interval[1], c.mutation_interval[2]),
+        size(chromosome.genes),
+    )
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
 
-function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Integer}
+function (c::RealGeneMutation{T})(
+    chromosome::Chromosome{T},
+)::Chromosome{T} where {T<:Integer}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
-    random_additions = rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
+    random_additions =
+        rand(range(c.mutation_interval[1], c.mutation_interval[2]), size(chromosome.genes))
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
@@ -50,7 +53,7 @@ end
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     a = [gene ⊻ m for (gene, m) in zip(chromosome.genes, mask)]
-    return Chromosome(a) 
+    return Chromosome(a)
 end
 
 """
@@ -74,7 +77,9 @@ struct SudokuMutation <: MutationMethod
     end
 end
 
-function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{Vector{Int64}}
+function (c::SudokuMutation)(
+    chromosome::Chromosome{Vector{Int64}},
+)::Chromosome{Vector{Int64}}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     new_chromosome = deepcopy(chromosome)
     values = Set(1:9)
@@ -91,10 +96,6 @@ function (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{
             end
         end
     end
-   
+
     return new_chromosome
-end
-
-
-export RealGeneMutation, SudokuMutation
 end

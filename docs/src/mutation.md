@@ -1,3 +1,4 @@
 ```@autodocs
-Modules = [GeneticAlgorithms.Mutation]
+Modules = [GeneticAlgorithms]
+Pages = ["Mutation.jl"]
 ```

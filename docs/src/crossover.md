@@ -1,3 +1,4 @@
 ```@autodocs
-Modules = [GeneticAlgorithms.Crossover]
+Modules = [GeneticAlgorithms]
+Pages = ["Crossover.jl"]
 ```

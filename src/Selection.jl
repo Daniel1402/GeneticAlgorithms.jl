@@ -1,6 +1,3 @@
-module Selection
-
-using ..Types: Population, Chromosome, SelectionMethod
 
 struct RouletteWheelSelection <: SelectionMethod end
 
@@ -19,7 +16,11 @@ Selection is based on the cumulative probabilities of the fitness scores.
 # Return
 - `Tuple{T,T}`: A tuple containing two selected chromosomes (parents).
 """
-function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::Vector{Float64}, rand_generator::Function=rand)::Tuple{T,T} where {T<:Chromosome}
+function (c::RouletteWheelSelection)(
+    population::Population{T},
+    fitness_scores::Vector{Float64},
+    rand_generator::Function = rand,
+)::Tuple{T,T} where {T<:Chromosome}
     if size(population.chromosomes, 1) != length(fitness_scores)
         throw(ArgumentError("Population and fitness scores must have the same length"))
     end
@@ -59,8 +60,4 @@ function (c::RouletteWheelSelection)(population::Population{T}, fitness_scores::
     p2_index += (p2_index >= p1_index ? 1 : 0)
 
     return population.chromosomes[p1_index], population.chromosomes[p2_index]
-end
-
-
-export RouletteWheelSelection
 end

@@ -1,17 +1,25 @@
 using Test
 
-#include("../src/GeneticAlgorithms.jl")
 using GeneticAlgorithms
-using GeneticAlgorithms.Types
 
-include("test_crossover.jl")
-include("test_population_initialization.jl")
-include("test_selection.jl")
-include("test_mutation.jl")
-include("test_fitness.jl")
-include("test_genetic_algorithms.jl")
-include("test_utils.jl")
-
-# @testset "GeneticAlgorithms.jl" begin
-#     # Write your tests here.
-# end
+@testset "Crossover" begin
+    include("test_crossover.jl")
+end
+@testset "PopulationInitialization" begin
+    include("test_population_initialization.jl")
+end
+@testset "Selection" begin
+    include("test_selection.jl")
+end
+@testset "Mutation" begin
+    include("test_mutation.jl")
+end
+@testset "Fitness" begin
+    include("test_fitness.jl")
+end
+@testset "Optimization" begin
+    include("test_optimization.jl")
+end
+@testset "Visualization" begin
+    include("test_visualization.jl")
+end
