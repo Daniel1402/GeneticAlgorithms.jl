@@ -1,14 +1,12 @@
 
 """
-    rosenbrock_fitness(values::Chromosome{Float64})::Float64
+    rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
 
-Calculates 100 divided by the Rosenbrock function value for a given vector.
+Calculates the fitness of the `chromosome` regarding the Rosenbrock function.
 
-# Arguments
-- `chromosome`: A chromosome containing the genes to evaluate.
-
-# Returns
-- 100 divided by the Rosenbrock function value as a Float64.
+The Rosenbrock function gets the genes of the chromosome as input. The result of the function 
+is transformed to a fitness value by dividing 100 by the result plus 1. 
+Throws an `ArgumentError` if the number of genes is less than 2.
 """
 function rosenbrock_fitness(chromosome::Chromosome{Float64})::Float64
     genes = chromosome.genes
@@ -25,8 +23,12 @@ end
 """
     sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
 
-Calculates the fitness of a Sudoku puzzle represented by the `chromosome``.
-The fitness value is the sum of the number of distinct values in each row and 3x3 subgrid.
+Calculates the fitness of a Sudoku puzzle represented by the `chromosome`.
+
+The fitness value is the sum of the number of distinct values in each row and each 3x3 subgrid.
+This results in a maximal fitness value of 162. 
+The function expects a chromosome with 9 genes, each representing a row in the Sudoku puzzle.
+The genes are expected to have no duplicates and values between 1 and 9.
 """
 function sudoku_fitness(chromosome::Chromosome{Vector{Int64}})::Float64
     fitness = 0

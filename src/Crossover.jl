@@ -4,7 +4,8 @@ struct SinglePointCrossover <: CrossoverMethod end
 """
     SinglePointCrossover(parent1::C, parent2::C)::Tuple{C,C} where {C<:Chromosome}
 
-Defines the single point crossover method for two chromosomes. Returns two offspring chromosomes.
+Defines the single point crossover method for two chromosomes `parent1` and `parent2`. 
+Returns a tuple of the two offspring chromosomes.
 """
 function (c::SinglePointCrossover)(parent1::C, parent2::C)::Tuple{C,C} where {C<:Chromosome}
     crossover_point = rand(1:length(parent1.genes))

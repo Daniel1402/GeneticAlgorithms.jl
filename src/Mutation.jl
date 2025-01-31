@@ -1,9 +1,12 @@
 """
     RealGeneMutation(mutation_rate::Float64, mutation_interval::Tuple{T,T})
 
-Defines the mutation of genes of real values (currently only `Float64` and `Integer` types (including `Bool`))
-Mutation is applied for each gene on its own with probability `mutation_rate` with values from the uniform
-distribution in the interval `mutation_interval`.
+Defines the mutation of genes of real values.
+
+Currently only `Float64` and `Integer` types (including `Bool`) are supported.
+Mutation is applied for each gene on its own with probability `mutation_rate`.
+On mutation a value from the uniform distribution in the interval `mutation_interval` is drawn 
+and added to the gene. Boolian genes are inverted. 
 """
 struct RealGeneMutation{T<:Real} <: MutationMethod
     mutation_rate::Float64
@@ -59,8 +62,11 @@ end
 """
     SudokuMutation(mutation_rate::Float64, initial::Vector{Vector{Int64}})
 
-Mutation method for Sudoku puzzles. The mutation is applied column-wise with probability `mutation_rate`.
-`initial` must be of size 9x9. Ensures that the initial values of `initial` are not changed and the remaining values are shuffled.
+Mutation method for Sudoku puzzles. 
+    
+The mutation is applied column-wise with probability `mutation_rate`.
+`initial` contains the initial sudoku grid and must be of size 9x9.
+The mutation ensures that the initial cells of `initial` are not changed and the remaining values are shuffled.
 """
 struct SudokuMutation <: MutationMethod
     mutation_rate::Float64
