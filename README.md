@@ -15,7 +15,7 @@
 > [!TIP]
 > Check out our [**short introduction to genetic algorithms**](#a-short-introduction-to-genetic-algorithms) if you are new to genetic algorithms.
 
-### Key Features
+## Key Features
 
 ✅ Easy-to-use API for defining and running genetic algorithms <br>
 ✅ Examples for **Rosenbrock minimization** and **sudoku solving** <br>
@@ -26,7 +26,7 @@
 
 ## Installation
 
-You will need [Julia 1.10](https://julialang.org/downloads/).
+You will need **Julia v1.10**.
 
 ```julia
 julia> ]
@@ -40,55 +40,11 @@ julia> using GeneticAlgorithms
 ```
 Now you are ready to optimize!
 
+## Getting Started
 
+Check out our [getting started guide](https://daniel1402.github.io/GeneticAlgorithms.jl/dev/example/) for usage examples. For more details see the [documentation](https://Daniel1402.github.io/GeneticAlgorithms.jl/dev/).
 
-### Project Structure
-
-Here is an overview of the project's main components:
-
-- **`src/`**: Contains the core modules for the genetic algorithms:
-  - `GeneticAlgorithms.jl`: Main entry point for the project.
-  - `Selection.jl`: Methods for selecting individuals for reproduction.
-  - `Crossover.jl`: Implements crossover techniques.
-  - `Mutation.jl`: Handles mutation operations.
-  - `PopulationInitialization.jl`: Functions to initialize the population.
-  - `Fitness.jl`: Defines fitness evaluation methods.
-  - `Types.jl`: Custom types used throughout the project.
-  - `Utils.jl`: Utility functions, e.G. visualization
-
-- **`test/`**: Unit tests for verifying the functionality of various components.
-- **`docs/`**: Documentation files for understanding and extending the project.
-
-### Running the Project
-
-1. Follow the installation steps above
-
-3. Use the provided functions to set up and run genetic algorithm experiments. For example:
-
-   ```julia
-   using GeneticAlgorithms
-   using GeneticAlgorithms.Selection
-   using GeneticAlgorithms.Crossover
-   using GeneticAlgorithms.Mutation
-   using GeneticAlgorithms.Fitness
-   using GeneticAlgorithms.PopulationInitialization
-
-   rouletteWheelSelection = RouletteWheelSelection()
-   singlePointCrossover = SinglePointCrossover()
-   geneMutation = RealGeneMutation(0.5, (-0.5, 0.5))
-   uniform = RealUniformInitialization(1000, 2, (-1.0, 1.0))
-   ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=100, mutation_rate=0.5, save_best=true)
-   println(optimize(ga_rosenbrock))
-   ```
-
-### Visualizing Results
-
-   ```julia
-   using GeneticAlgorithms.Utils
-   visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "result.png")
-   ```
-
-### A Short Introduction to Genetic Algorithms
+## A Short Introduction to Genetic Algorithms
 
 Genetic Algorithms (GAs) are optimization methods inspired by natural evolution, where a population of solutions evolves toward better performance through selection, crossover, and mutation in iterative loops.
 
