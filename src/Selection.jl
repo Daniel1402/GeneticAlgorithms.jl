@@ -19,8 +19,8 @@ Selection is based on the cumulative probabilities of the fitness scores.
 function (c::RouletteWheelSelection)(
     population::Population{T},
     fitness_scores::Vector{Float64},
-    rand_generator::Function = rand,
-)::Tuple{T,T} where {T<:Chromosome}
+    rand_generator::F = rand,
+)::Tuple{T,T} where {T<:Chromosome, F<:Function}
     if size(population.chromosomes, 1) != length(fitness_scores)
         throw(ArgumentError("Population and fitness scores must have the same length"))
     end

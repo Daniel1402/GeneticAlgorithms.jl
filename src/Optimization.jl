@@ -191,6 +191,6 @@ function mutate(method::M, individual::P)::P where {M<:MutationMethod,P<:Chromos
     return method(individual)
 end
 
-function evaluate_fitness(individual::I, fitness_function::Function)::Float64 where {I<:Chromosome}
+function evaluate_fitness(individual::I, fitness_function::F)::Float64 where {I<:Chromosome, F<:Function}
     return fitness_function(individual)
 end
