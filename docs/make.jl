@@ -20,7 +20,7 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Getting Started" => "example.md",
-        "Genetic Algorithm" => "genetic_algorithm.md",
+        "Optimization" => "optimization.md",
         "Types" => "types.md",
         "Population Initialization" => "population_initialization.md",
         "Selection" => "selection.md",
