@@ -1,10 +1,14 @@
 """
     RealUniformInitialization(population_size::Int64, chromosome_size::Int64, interval::Tuple{T,T})
 
+    RealUniformInitialization(population_size::Int64, chromosome_size::Int64, intervals::Vector{Tuple{T,T}})
+
 Creates a population of `population_size` including chromosomes of `chromosome_size`. 
-The chromosome-values are drawn from a uniform distribution over `interval`. 
+The chromosome-values are drawn from a uniform distribution over `interval`.
+In the second constructor, the `intervals` vector specifies the interval for each gene.
 The current implementation supports `Float64` and `Integer` types. 
 The type is determined by the `interval`.
+The struct must be called to create a population.
 """
 struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     population_size::Int64
@@ -63,6 +67,11 @@ struct RealUniformInitialization{T<:Real} <: PopulationInitializationMethod
     end
 end
 
+"""
+    (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Float64}
+
+Creates a population with Float genes.
+"""
 function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Float64}
     return Population([
         Chromosome([
@@ -71,6 +80,11 @@ function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T
     ])
 end
 
+"""
+    (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Integer}
+
+Creates a population with Integer genes.
+"""
 function (c::RealUniformInitialization{T})()::Population{Chromosome{T}} where {T<:Integer}
     return Population([
         Chromosome([
@@ -103,6 +117,12 @@ struct SudokuInitialization <: PopulationInitializationMethod
     end
 end
 
+
+"""
+    (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
+
+The population is created by calling the `SudokuInitialization` object.
+"""
 function (c::SudokuInitialization)()::Population{Chromosome{Vector{Int64}}}
     function new_chromosome()
         values = Set(1:9)

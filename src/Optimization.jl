@@ -8,8 +8,8 @@
         mutation_method::M;
         elitism::Bool=true,
         verbose::Bool=false,
-        max_generations::Int=5,
-        mutation_rate::Float64=0.1,
+        max_generations::Int64=100,
+        mutation_rate::Float64=0.2,
         save_best::Bool=false,
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
 
@@ -23,8 +23,8 @@ Defines a genetic algorithm with the specified parameters for selection, mutatio
 - `mutation_method::M`: Method to mutate the offspring.
 - `elitism::Bool=true`: If true, the best individual from the previous generation is carried over to the next generation.
 - `verbose::Bool=false`: If true, additional information is printed during the execution.
-- `max_generations::Int=5`: Number of generations the algorithm runs for.
-- `mutation_rate::Float64=0.1`: Probability of mutation for each offspring in a generation.
+- `max_generations::Int64=100`: Number of generations the algorithm runs for.
+- `mutation_rate::Float64=0.2`: Probability of mutation for each offspring in a generation.
 - `save_best::Bool=false`: If true, the best chromosomes and their fitness scores are saved for visualization.
 
 # Fields
@@ -70,8 +70,8 @@ struct GeneticAlgorithm{
         mutation_method::M;
         elitism::Bool = true,
         verbose::Bool = false,
-        max_generations::Int = 5,
-        mutation_rate::Float64 = 0.1,
+        max_generations::Int64 = 100,
+        mutation_rate::Float64 = 0.2,
         save_best::Bool = false,
     ) where {
         P<:PopulationInitializationMethod,
