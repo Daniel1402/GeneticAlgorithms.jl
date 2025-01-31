@@ -1,3 +1,4 @@
 ```@autodocs
-Modules = [GeneticAlgorithms.PopulationInitialization]
+Modules = [GeneticAlgorithms]
+Pages = ["PopulationInitialization.jl"]
 ```

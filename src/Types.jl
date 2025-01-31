@@ -1,4 +1,3 @@
-module Types
 
 
 """
@@ -51,8 +50,4 @@ A population consists of a vector of `chromosomes` of type `T`.
 """
 struct Population{T<:Chromosome}
     chromosomes::Vector{T}
-end
-
-export PopulationInitializationMethod, SelectionMethod, CrossoverMethod, MutationMethod, Population, Chromosome
-
 end

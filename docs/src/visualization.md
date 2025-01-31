@@ -1,3 +1,3 @@
 ```@autodocs
-Modules = [GeneticAlgorithms.Utils]
+Modules = [GeneticAlgorithms.Visualization]
 ```

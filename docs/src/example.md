@@ -2,11 +2,6 @@
 
 ```@example 
 using GeneticAlgorithms
-using GeneticAlgorithms.Selection
-using GeneticAlgorithms.Crossover
-using GeneticAlgorithms.Mutation
-using GeneticAlgorithms.Fitness
-using GeneticAlgorithms.PopulationInitialization
 
 rouletteWheelSelection = RouletteWheelSelection()
 singlePointCrossover = SinglePointCrossover()
@@ -21,11 +16,6 @@ println(optimize(ga_rosenbrock))
 ```@example
 ## Preparation
 using GeneticAlgorithms
-using GeneticAlgorithms.Selection
-using GeneticAlgorithms.Crossover
-using GeneticAlgorithms.Mutation
-using GeneticAlgorithms.Fitness
-using GeneticAlgorithms.PopulationInitialization
 
 rouletteWheelSelection = RouletteWheelSelection()
 singlePointCrossover = SinglePointCrossover()
@@ -34,8 +24,8 @@ uniform = RealUniformInitialization(10, 2, (-1.0, 1.0))
 ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=100, mutation_rate=0.5, save_best=true)
 optimize(ga_rosenbrock)
 
-## Visualisation
-using GeneticAlgorithms.Utils
+## Visualization
+using GeneticAlgorithms.Visualization
 visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "rbplot.svg")
 ```
 
@@ -45,13 +35,7 @@ visualize_rosenbrock_results(ga_rosenbrock.best_chromosomes, "rbplot.svg")
 
 ```@example
 using GeneticAlgorithms
-using GeneticAlgorithms.Selection
-using GeneticAlgorithms.Crossover
-using GeneticAlgorithms.Mutation
-using GeneticAlgorithms.Fitness
-using GeneticAlgorithms.PopulationInitialization
-using GeneticAlgorithms.Utils
-using GeneticAlgorithms.Types
+using GeneticAlgorithms.Visualization
 
 initial = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
