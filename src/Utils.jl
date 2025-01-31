@@ -50,7 +50,7 @@ function visualize_function_with_contours(
     y_range::Tuple{Float64,Float64}=(-2.0, 2.0),
     path::Vector{Tuple{Float64,Float64}}=[],
     color_label::String="Fitness Value"
-)
+) :: Plots.Plot
     x = range(x_range[1], x_range[2], length=100)
     y = range(y_range[1], y_range[2], length=100)
     z = [f(xi, yi) for yi in y, xi in x]
