@@ -32,6 +32,7 @@ function visualize_rosenbrock_results(
         x_range = x_range,
         y_range = y_range,
         path = [Tuple(best_chromosomes[i].genes[1:2]) for i = 1:length(best_chromosomes)],
+        color_label="Rosenbrock Fitness Value",
     )
     savefig(plt, save_path)
 end
@@ -53,12 +54,14 @@ function visualize_function_with_contours(
     x_range::Tuple{Float64,Float64} = (-2.0, 2.0),
     y_range::Tuple{Float64,Float64} = (-2.0, 2.0),
     path::Vector{Tuple{Float64,Float64}} = [],
+    color_label::String="Fitness Value"
 )
     x = range(x_range[1], x_range[2], length = 100)
     y = range(y_range[1], y_range[2], length = 100)
     z = [f(xi, yi) for yi in y, xi in x]
 
-    plt = contour(x, y, z, color = :viridis, linewidth = 2)
+    plt = contour(x, y, z, color=:viridis, linewidth=2, xlabel="x", ylabel="y", title="Optimization Visualization")
+    plot!(plt, colorbar_title=color_label)
 
     if !isempty(path)
         x_points = [p[1] for p in path]
@@ -69,7 +72,7 @@ function visualize_function_with_contours(
             x_points,
             y_points,
             color = :red,
-            label = "optimization path",
+            label = "Optimization Path",
             linewidth = 2,
         )
         scatter!(
@@ -88,14 +91,12 @@ function visualize_function_with_contours(
             color = :green,
             marker = :circle,
             markersize = 5,
-            label = "optimization result",
+            label = "Optimization Result",
         )
     end
 
     return plt
 end
-
-
 
 """
     print_sudoku(chromosome::Chromosome)
