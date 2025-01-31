@@ -30,7 +30,11 @@ struct RealGeneMutation{T<:Real} <: MutationMethod
 
 end
 
+"""
+    (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Float64}
 
+Applies the mutation to the given `chromosome` if the chromosome is of type `Float64`.
+"""
 function (c::RealGeneMutation{T})(
     chromosome::Chromosome{T},
 )::Chromosome{T} where {T<:Float64}
@@ -42,7 +46,11 @@ function (c::RealGeneMutation{T})(
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
+"""
+    (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Integer}
 
+Applies the mutation to the given `chromosome` if the chromosome is of type `Integer`.
+"""
 function (c::RealGeneMutation{T})(
     chromosome::Chromosome{T},
 )::Chromosome{T} where {T<:Integer}
@@ -52,7 +60,11 @@ function (c::RealGeneMutation{T})(
     return Chromosome(chromosome.genes .+ (mask .&& random_additions))
 end
 
+"""
+    (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
 
+Applies the mutation to the given `chromosome` if the chromosome is of type `Bool`.
+"""
 function (c::RealGeneMutation{T})(chromosome::Chromosome{T})::Chromosome{T} where {T<:Bool}
     mask = rand(Uniform(0, 1), size(chromosome.genes)) .< c.mutation_rate
     a = [gene ⊻ m for (gene, m) in zip(chromosome.genes, mask)]
@@ -83,6 +95,11 @@ struct SudokuMutation <: MutationMethod
     end
 end
 
+"""
+    (c::SudokuMutation)(chromosome::Chromosome{Vector{Int64}})::Chromosome{Vector{Int64}}
+
+Applies the Sudoku mutation to the given `chromosome`.
+"""
 function (c::SudokuMutation)(
     chromosome::Chromosome{Vector{Int64}},
 )::Chromosome{Vector{Int64}}

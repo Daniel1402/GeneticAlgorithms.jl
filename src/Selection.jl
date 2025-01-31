@@ -1,5 +1,5 @@
 """
-    RouletteWheelSelection <: SelectionMethod
+    RouletteWheelSelection()
 
 Struct for Roulette Wheel Selection. This selection method is based on the cumulative 
 probabilities of the fitness scores. Implemented as a callable object.
