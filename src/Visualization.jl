@@ -10,16 +10,10 @@ gr() # set gr backend
 
 Generates a visualization of the optimization process for the Rosenbrock fitness function with given `best_chromosomes`.
 The visualization is saved to the specified `save_path`.
-
-# Example
-```
-julia
-visualize_results([Chromosome([0.0, 0.0]), Chromosome([0.5, 0.5]), Chromosome([1.0, 1.0])], "rosenbrock_path.png")
-```
 """
 function visualize_rosenbrock_results(
     best_chromosomes::Vector{T},
-    save_path::String = "result.png",
+    save_path::String="result.png",
 ) where {T<:Chromosome}
     f(x, y) = rosenbrock_fitness(Chromosome([x, y]))
 
@@ -29,9 +23,9 @@ function visualize_rosenbrock_results(
     y_range = (y_center - 2.0, y_center + 2.0)
     plt = visualize_function_with_contours(
         f,
-        x_range = x_range,
-        y_range = y_range,
-        path = [Tuple(best_chromosomes[i].genes[1:2]) for i = 1:length(best_chromosomes)],
+        x_range=x_range,
+        y_range=y_range,
+        path=[Tuple(best_chromosomes[i].genes[1:2]) for i = 1:length(best_chromosomes)],
         color_label="Rosenbrock Fitness Value",
     )
     savefig(plt, save_path)
@@ -51,13 +45,13 @@ A contour plot of the function with optional highlighted points.
 """
 function visualize_function_with_contours(
     f::Function;
-    x_range::Tuple{Float64,Float64} = (-2.0, 2.0),
-    y_range::Tuple{Float64,Float64} = (-2.0, 2.0),
-    path::Vector{Tuple{Float64,Float64}} = [],
+    x_range::Tuple{Float64,Float64}=(-2.0, 2.0),
+    y_range::Tuple{Float64,Float64}=(-2.0, 2.0),
+    path::Vector{Tuple{Float64,Float64}}=[],
     color_label::String="Fitness Value"
 )
-    x = range(x_range[1], x_range[2], length = 100)
-    y = range(y_range[1], y_range[2], length = 100)
+    x = range(x_range[1], x_range[2], length=100)
+    y = range(y_range[1], y_range[2], length=100)
     z = [f(xi, yi) for yi in y, xi in x]
 
     plt = contour(x, y, z, color=:viridis, linewidth=2, xlabel="x", ylabel="y", title="Optimization Visualization")
@@ -71,27 +65,27 @@ function visualize_function_with_contours(
             plt,
             x_points,
             y_points,
-            color = :red,
-            label = "Optimization Path",
-            linewidth = 2,
+            color=:red,
+            label="Optimization Path",
+            linewidth=2,
         )
         scatter!(
             plt,
             x_points[2:end],
             y_points[2:end],
-            color = :red,
-            marker = :circle,
-            markersize = 3,
-            label = "",
+            color=:red,
+            marker=:circle,
+            markersize=3,
+            label="",
         )
         scatter!(
             plt,
             [x_points[end]],
             [y_points[end]],
-            color = :green,
-            marker = :circle,
-            markersize = 5,
-            label = "Optimization Result",
+            color=:green,
+            marker=:circle,
+            markersize=5,
+            label="Optimization Result",
         )
     end
 
@@ -101,12 +95,8 @@ end
 """
     print_sudoku(chromosome::Chromosome)
 
-Prints the Sudoku genes of the given chromosome.
-
-# Arguments
-- `chromosome::Chromosome`: The chromosome to print.
-
-# Example
+Prints the Sudoku genes of the given `chromosome`.
+Betwee each 3x3 block, lines are drawn to separate the blocks.
 """
 function print_sudoku(chromosome::Chromosome)
     for (i, gene) in enumerate(chromosome.genes)
