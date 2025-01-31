@@ -8,8 +8,8 @@
         mutation_method::M;
         elitism::Bool=true,
         verbose::Bool=false,
-        max_generations::Int64=100,
-        mutation_rate::Float64=0.2,
+        max_generations::Int=5,
+        mutation_rate::Float64=0.1,
         save_best::Bool=false,
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
 
@@ -23,14 +23,14 @@ Defines a genetic algorithm with the specified parameters for selection, mutatio
 - `mutation_method::M`: Method to mutate the offspring.
 - `elitism::Bool=true`: If true, the best individual from the previous generation is carried over to the next generation.
 - `verbose::Bool=false`: If true, additional information is printed during the execution.
-- `max_generations::Int64=100`: Number of generations the algorithm runs for.
-- `mutation_rate::Float64=0.2`: Probability of mutation for each offspring in a generation.
+- `max_generations::Int64=5`: Number of generations the algorithm runs for.
+- `mutation_rate::Float64=0.1`: Probability of mutation for each offspring in a generation.
 - `save_best::Bool=false`: If true, the best chromosomes and their fitness scores are saved for visualization.
 
 # Fields
 - `initialization_strategy::P`: Strategy to initialize the population.
 - `fitness_function::Function`: Function to calculate the fitness of each chromosome.
-- `max_generations::Int`: Number of generations the algorithm runs for.
+- `max_generations::Int64`: Number of generations the algorithm runs for.
 - `selection_strategy::S`: Strategy to select parents for crossover.
 - `crossover_method::C`: Method to generate offspring from selected parents.
 - `mutation_method::M`: Method to mutate the offspring.
@@ -51,7 +51,7 @@ struct GeneticAlgorithm{
 }
     initialization_strategy::P
     fitness_function::Function
-    max_generations::Int
+    max_generations::Int64
     selection_strategy::S
     crossover_method::C
     mutation_method::M
@@ -68,11 +68,11 @@ struct GeneticAlgorithm{
         selection_strategy::S,
         crossover_method::C,
         mutation_method::M;
-        elitism::Bool = true,
-        verbose::Bool = false,
-        max_generations::Int64 = 100,
-        mutation_rate::Float64 = 0.2,
-        save_best::Bool = false,
+        elitism::Bool=true,
+        verbose::Bool=false,
+        max_generations::Int64=5,
+        mutation_rate::Float64=0.1,
+        save_best::Bool=false,
     ) where {
         P<:PopulationInitializationMethod,
         S<:SelectionMethod,
@@ -111,7 +111,7 @@ function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
 
     for generation = 1:genetic_algorithm.max_generations
         # Sort population by fitness
-        sorted_population = sortperm(fitness_scores, by = fitness_score -> -fitness_score)
+        sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
         population = Population(population.chromosomes[sorted_population])
         fitness_scores = fitness_scores[sorted_population]
 
@@ -156,7 +156,7 @@ function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
     end
 
     # Final sort of the population
-    sorted_population = sortperm(fitness_scores, by = fitness_score -> -fitness_score)
+    sorted_population = sortperm(fitness_scores, by=fitness_score -> -fitness_score)
     population = Population(population.chromosomes[sorted_population])
     fitness_scores = fitness_scores[sorted_population]
 
@@ -183,7 +183,7 @@ function crossover(
     method::C,
     parent1::P,
     parent2::P,
-)::Tuple{P, P} where {C<:CrossoverMethod,P<:Chromosome}
+)::Tuple{P,P} where {C<:CrossoverMethod,P<:Chromosome}
     return method(parent1, parent2)
 end
 
@@ -191,6 +191,6 @@ function mutate(method::M, individual::P)::P where {M<:MutationMethod,P<:Chromos
     return method(individual)
 end
 
-function evaluate_fitness(individual::I, fitness_function::F)::Float64 where {I<:Chromosome, F<:Function}
+function evaluate_fitness(individual::I, fitness_function::F)::Float64 where {I<:Chromosome,F<:Function}
     return fitness_function(individual)
 end
