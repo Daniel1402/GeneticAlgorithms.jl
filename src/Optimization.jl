@@ -95,10 +95,13 @@ struct GeneticAlgorithm{
 end
 
 """
-    optimize(genetic_algorithm::GeneticAlgorithm)
+    optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
 
-Runs the genetic algorithm with the specified parameters and returns the best individual found.
+Runs the genetic algorithm optimization loop and returns the best Chromosome.
 
+`genetic_algorithm` specifies the configuration of the genetic algorithm that is optimized.
+If the field `genetic_algorithm.save_best` is `true` the field `genetic_algorithm.best_chromosomes` 
+and `genetic_algorithm.best_fitness` are filled during the optimization process.
 """
 function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
     population::Population =
