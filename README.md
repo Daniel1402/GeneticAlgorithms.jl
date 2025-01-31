@@ -1,29 +1,46 @@
-# GeneticAlgorithms
+> [!NOTE]
+> This project is part of the Julia for Machine Learning course at **Technical University Berlin**.
+> The project is expected to be submitted on **31.01.2025**. After submission, it will **no longer be actively maintained or updated**.
 
+# GeneticAlgorithms.jl 🧬
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://Daniel1402.github.io/GeneticAlgorithms.jl/dev/)
 [![Build Status](https://github.com/Daniel1402/GeneticAlgorithms.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/Daniel1402/GeneticAlgorithms.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/Daniel1402/GeneticAlgorithms.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/Daniel1402/GeneticAlgorithms.jl)
 
-This project is part of the Julia for Machine Learning course at Technical University Berlin.
 
+
+**GeneticAlgorithms.jl** is a powerful and flexible library for solving optimization problems using **genetic algorithms** in Julia. This package provides efficient implementations of selection, crossover, mutation, and elitism to evolve solutions to complex problems.
+
+> [!TIP]
 > Check out our [**short introduction to genetic algorithms**](#a-short-introduction-to-genetic-algorithms) if you are new to genetic algorithms.
 
-## Getting Started with the Genetic Algorithms Project
+### Key Features
 
-### Prerequisites
+✅ Easy-to-use API for defining and running genetic algorithms <br>
+✅ Examples for **Rosenbrock minimization** and **sudoku solving** <br>
+✅ Built-in **selection** strategies: roulette wheel<br>
+✅ Built-in **crossover** strategies: single point crossover<br>
+✅ Built-in **mutation** strategies for real valued genes and Sudoku solving <br>
+✅ **Visualization** submodule for visualizing the optimization of the Rosenbrock function and printing Sudokus
 
-- Git
-- Julia and a package manager
+## Installation
 
-### Installation
+You will need [Julia 1.10](https://julialang.org/downloads/).
 
-(In temporary environment)
-```bash
-pkg> activate --temp
-pkg> add https://github.com/Daniel1402/GeneticAlgorithms.jl
-using GeneticAlgorithms
+```julia
+julia> ]
+(@v1.10) pkg> add https://github.com/Daniel1402/GeneticAlgorithms.jl
 ```
+
+Quit the package manager prompt by pressing <kbd>Ctrl+C</kbd>.
+
+```julia
+julia> using GeneticAlgorithms
+```
+Now you are ready to optimize!
+
+
 
 ### Project Structure
 
