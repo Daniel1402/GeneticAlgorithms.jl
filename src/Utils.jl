@@ -28,7 +28,7 @@ function visualize_rosenbrock_results(best_chromosomes::Vector{T}, save_path::St
     x_center, y_center = best_chromosomes[end]
     x_range = (x_center - 2.0, x_center + 2.0)
     y_range = (y_center - 2.0, y_center + 2.0)
-    plt = visualize_function_with_contours(f, x_range=x_range, y_range=y_range, path=[Tuple(best_chromosomes[i].genes[1:2]) for i in 1:length(best_chromosomes)])
+    plt = visualize_function_with_contours(f, x_range=x_range, y_range=y_range, path=[Tuple(best_chromosomes[i].genes[1:2]) for i in 1:length(best_chromosomes)], color_label="Rosenbrock Fitness Value")
     savefig(plt, save_path)
 end
 
@@ -48,27 +48,27 @@ function visualize_function_with_contours(
     f::Function;
     x_range::Tuple{Float64,Float64}=(-2.0, 2.0),
     y_range::Tuple{Float64,Float64}=(-2.0, 2.0),
-    path::Vector{Tuple{Float64,Float64}}=[]
+    path::Vector{Tuple{Float64,Float64}}=[],
+    color_label::String="Fitness Value"
 )
     x = range(x_range[1], x_range[2], length=100)
     y = range(y_range[1], y_range[2], length=100)
     z = [f(xi, yi) for yi in y, xi in x]
 
-    plt = contour(x, y, z, color=:viridis, linewidth=2)
+    plt = contour(x, y, z, color=:viridis, linewidth=2, xlabel="x", ylabel="y", title="Optimization Visualization")
+    plot!(plt, colorbar_title=color_label)
 
     if !isempty(path)
         x_points = [p[1] for p in path]
         y_points = [p[2] for p in path]
 
-        plot!(plt, x_points, y_points, color=:red, label="optimization path", linewidth=2)
+        plot!(plt, x_points, y_points, color=:red, label="Optimization Path", linewidth=2)
         scatter!(plt, x_points[2:end], y_points[2:end], color=:red, marker=:circle, markersize=3, label="")
-        scatter!(plt, [x_points[end]], [y_points[end]], color=:green, marker=:circle, markersize=5, label="optimization result")
+        scatter!(plt, [x_points[end]], [y_points[end]], color=:green, marker=:circle, markersize=5, label="Optimization Result")
     end
 
     return plt
 end
-
-
 
 """
     print_sudoku(chromosome::Chromosome)
