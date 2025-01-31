@@ -6,7 +6,7 @@ singlePointCrossover = SinglePointCrossover()
 geneMutation = RealGeneMutation(0.5, (-0.5, 0.5))
 uniform = RealUniformInitialization(1000, 2, (-1.0, 1.0))
 ga_rosenbrock = GeneticAlgorithm(uniform, rosenbrock_fitness, rouletteWheelSelection, singlePointCrossover, geneMutation, elitism=true, max_generations=100, mutation_rate=0.5, save_best=true)
-println(optimize(ga_rosenbrock))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Chromosome{Float64}([0.9927408363266627, 0.9849433898855219])</code></pre><h3 id="Visualizing-Results-Rosenbrock-Problem"><a class="docs-heading-anchor" href="#Visualizing-Results-Rosenbrock-Problem">Visualizing Results - Rosenbrock Problem</a><a id="Visualizing-Results-Rosenbrock-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Visualizing-Results-Rosenbrock-Problem" title="Permalink"></a></h3><pre><code class="language-julia hljs">## Preparation
+println(optimize(ga_rosenbrock))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Chromosome{Float64}([1.042123197095377, 1.083307700264982])</code></pre><h3 id="Visualizing-Results-Rosenbrock-Problem"><a class="docs-heading-anchor" href="#Visualizing-Results-Rosenbrock-Problem">Visualizing Results - Rosenbrock Problem</a><a id="Visualizing-Results-Rosenbrock-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Visualizing-Results-Rosenbrock-Problem" title="Permalink"></a></h3><pre><code class="language-julia hljs">## Preparation
 using GeneticAlgorithms
 
 rouletteWheelSelection = RouletteWheelSelection()
@@ -55,14 +55,14 @@ print_sudoku(chromosome)</code></pre><pre class="documenter-example-output"><cod
  0  0  0  |  4  1  9  |  0  0  5
  0  0  0  |  0  8  0  |  0  7  9
 Optimized Result:
- 5  3  1  |  2  7  8  |  9  6  4
- 6  4  2  |  1  9  5  |  3  7  8
- 7  9  8  |  3  4  1  |  5  6  2
+ 5  3  4  |  6  7  8  |  9  1  2
+ 6  7  2  |  1  9  5  |  8  3  4
+ 1  9  8  |  2  4  3  |  7  6  5
 ----------+-----------+----------
- 8  1  4  |  9  6  7  |  5  2  3
- 4  2  9  |  8  5  3  |  6  7  1
- 7  3  5  |  1  2  4  |  8  9  6
+ 8  2  1  |  9  6  7  |  4  5  3
+ 4  9  6  |  8  5  3  |  7  2  1
+ 7  8  5  |  1  2  4  |  3  9  6
 ----------+-----------+----------
- 9  6  7  |  5  3  4  |  2  8  1
- 2  8  6  |  4  1  9  |  7  3  5
- 1  3  5  |  6  8  2  |  4  7  9</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../optimization/">Optimization »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Friday 31 January 2025 11:18">Friday 31 January 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+ 4  6  9  |  5  3  1  |  2  8  7
+ 3  8  7  |  4  1  9  |  2  6  5
+ 2  1  5  |  3  8  6  |  4  7  9</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../optimization/">Optimization »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Friday 31 January 2025 11:43">Friday 31 January 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
