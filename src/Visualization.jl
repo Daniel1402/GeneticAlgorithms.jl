@@ -1,6 +1,6 @@
 module Visualization
 
-using Plots
+using Plots: contour, plot!, scatter!, savefig, gr
 using GeneticAlgorithms: Chromosome, rosenbrock_fitness
 
 gr() # set gr backend
