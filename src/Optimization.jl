@@ -167,7 +167,7 @@ function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
     return population.chromosomes[1]
 end
 
-function initialize_population(strategy::P) where {P<:PopulationInitializationMethod}
+function initialize_population(strategy::P)::Population where {P<:PopulationInitializationMethod}
     return strategy()
 end
 
@@ -175,7 +175,7 @@ function select(
     strategy::S,
     population::Population{T},
     fitness_scores::Vector{F},
-) where {S<:SelectionMethod,T<:Chromosome,F<:Number}
+)::Tuple{T,T} where {S<:SelectionMethod,T<:Chromosome,F<:Number}
     return strategy(population, fitness_scores)
 end
 
@@ -183,14 +183,14 @@ function crossover(
     method::C,
     parent1::P,
     parent2::P,
-) where {C<:CrossoverMethod,P<:Chromosome}
+)::Tuple{P, P} where {C<:CrossoverMethod,P<:Chromosome}
     return method(parent1, parent2)
 end
 
-function mutate(method::M, individual::P) where {M<:MutationMethod,P<:Chromosome}
+function mutate(method::M, individual::P)::P where {M<:MutationMethod,P<:Chromosome}
     return method(individual)
 end
 
-function evaluate_fitness(individual::I, fitness_function::Function) where {I<:Chromosome}
+function evaluate_fitness(individual::I, fitness_function::Function)::Float64 where {I<:Chromosome}
     return fitness_function(individual)
 end
