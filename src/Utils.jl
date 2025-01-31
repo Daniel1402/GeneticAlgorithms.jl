@@ -1,6 +1,6 @@
 module Utils
 
-using Plots: contour, plot!, scatter!, savefig, gr
+using Plots
 using ..Fitness: rosenbrock_fitness
 using ..Types: Chromosome
 
