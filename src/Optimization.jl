@@ -8,8 +8,8 @@
         mutation_method::M;
         elitism::Bool=true,
         verbose::Bool=false,
-        max_generations::Int=5,
-        mutation_rate::Float64=0.1,
+        max_generations::Int64=100,
+        mutation_rate::Float64=0.2,
         save_best::Bool=false,
     ) where {P<:PopulationInitializationMethod,S<:SelectionMethod,C<:CrossoverMethod,M<:MutationMethod}
 
