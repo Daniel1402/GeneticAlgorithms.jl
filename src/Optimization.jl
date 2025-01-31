@@ -70,9 +70,11 @@ struct GeneticAlgorithm{
         mutation_method::M;
         elitism::Bool = true,
         verbose::Bool = false,
-        max_generations::Int = 5,
+        max_generations::Int = typemax(Int),
         mutation_rate::Float64 = 0.1,
         save_best::Bool = false,
+        max_no_improvement::Int=typemax(Int),
+        target_fitness::Float64=typemax(Float64),
     ) where {
         P<:PopulationInitializationMethod,
         S<:SelectionMethod,
@@ -89,6 +91,8 @@ struct GeneticAlgorithm{
         elitism,
         verbose,
         save_best,
+        max_no_improvement,
+        target_fitness,
         Vector{Chromosome}(),
         Vector{Float64}(),
     )
@@ -109,11 +113,34 @@ function optimize(genetic_algorithm::GeneticAlgorithm)::Chromosome
         individual in population.chromosomes
     ]
 
+    no_improvement_count = 0
+    best_fitness_so_far = -Inf
+
     for generation = 1:genetic_algorithm.max_generations
         # Sort population by fitness
         sorted_population = sortperm(fitness_scores, by = fitness_score -> -fitness_score)
         population = Population(population.chromosomes[sorted_population])
         fitness_scores = fitness_scores[sorted_population]
+
+        # Stop if target fitness is reached
+        if fitness_scores[1] >= genetic_algorithm.target_fitness
+            @info "Target fitness reached in generation $generation."
+            break
+        end
+
+        # Stop if population has converged
+        if fitness_scores[1] == best_fitness_so_far
+            no_improvement_count += 1
+        else
+            no_improvement_count = 0
+        end
+        
+        best_fitness_so_far = fitness_scores[1]
+
+        if no_improvement_count >= genetic_algorithm.max_no_improvement
+            @info "No improvement for $genetic_algorithm.max_no_improvement generations. Stopping."
+            break
+        end
 
         if genetic_algorithm.verbose
             @info "Generation $generation | Best Fitness: $(fitness_scores[1])"
