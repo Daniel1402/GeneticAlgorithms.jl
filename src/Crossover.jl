@@ -1,11 +1,15 @@
+"""
+    SinglePointCrossover()
 
+Callable type for the single point crossover method. 
+The single point crossover method selects a random point in the chromosome and swaps all genes after that point.
+"""
 struct SinglePointCrossover <: CrossoverMethod end
 
 """
-    SinglePointCrossover(parent1::C, parent2::C)::Tuple{C,C} where {C<:Chromosome}
+    (c::SinglePointCrossover)(parent1::C, parent2::C)::Tuple{C,C} where {C<:Chromosome}
 
-Defines the single point crossover method for two chromosomes `parent1` and `parent2`. 
-Returns a tuple of the two offspring chromosomes.
+Performs single point crossover on two parent chromosomes, returning two offspring chromosomes.
 """
 function (c::SinglePointCrossover)(parent1::C, parent2::C)::Tuple{C,C} where {C<:Chromosome}
     crossover_point = rand(1:length(parent1.genes))
